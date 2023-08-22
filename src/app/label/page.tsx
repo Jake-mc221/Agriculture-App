@@ -3,26 +3,22 @@ import { MdInfo } from "react-icons/md";
 
 export default function PlantHealth() {
   return (
-    <main className="w-full h-screen flex flex-col justify-end items-center bg-white">
-      <div className="relative border rounded-t-2xl p-6 text-center bg-white">
-        <h2 className="text-xl text-black font-bold mb-4">
-          How is the health of the plant?
-        </h2>
+    <div className="absolute bottom-0 w-full flex flex-col items-center">
+      <div className="relative flex flex-col gap-5 border rounded-t-2xl p-6 text-center bg-slate-100">
+        <h1>How is the health of the plant?</h1>
         <div className="flex justify-center space-x-4">
           <div className="bg-gray-200 rounded-full p-2">
-            <MdEnergySavingsLeaf className="text-green-500 w-20 h-20" />
+            <MdEnergySavingsLeaf className="text-primary w-20 h-20" />
           </div>
           <div className="bg-gray-200 rounded-full p-2">
-            <MdEnergySavingsLeaf className="text-yellow-500 w-20 h-20" />
+            <MdEnergySavingsLeaf className="text-yellow-500/80 w-20 h-20" />
           </div>
           <div className="bg-gray-200 rounded-full p-2">
-            <MdEnergySavingsLeaf className="text-red-500 w-20 h-20" />
+            <MdEnergySavingsLeaf className="text-red-500/80 w-20 h-20" />
           </div>
         </div>
-        <div className="absolute bottom-0 left-0">
-          <MdInfo className="text-green-500 w-10 h-10" />
-        </div>
+        <MdInfo className="absolute bottom-0 left-0 text-primary w-10 h-10" />
       </div>
-    </main>
+    </div>
   );
 }

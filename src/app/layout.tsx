@@ -1,3 +1,4 @@
+import NavigationBar from "@/components/core/NavigationBar";
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
@@ -16,10 +17,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <main className="flex flex-col items-center min-h-screen">
+      <body className={`flex flex-col w-full min-h-screen ${inter.className}`}>
+        <main className="relative flex flex-col flex-1 items-center">
           {children}
         </main>
+        <footer>
+          <NavigationBar></NavigationBar>
+        </footer>
       </body>
     </html>
   );

@@ -11,8 +11,8 @@ export default function Profile() {
   }, []);
 
   return (
-    <div className="bg-green-600/70 min-h-[25rem] w-full flex flex-col items-center gap-10 p-10">
-      <h1 className="font-medium text-4xl text-gray-200">Profile</h1>
+    <div className="bg-primary min-h-[25rem] w-full flex flex-col items-center gap-10 p-10">
+      <h1 className="text-gray-200">Profile</h1>
       <ProgressCircle
         initialValue={0}
         targetValue={userXp}
