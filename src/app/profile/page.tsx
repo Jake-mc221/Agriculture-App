@@ -1,3 +1,27 @@
+"use client";
+
+import { ProgressCircle } from "@/components/common/ProgressCircle";
+import { useEffect, useState } from "react";
+
 export default function Profile() {
-  return <div className="bg-green-500 h-100"></div>;
+  const [userXp, setUserXp] = useState<number>(0);
+
+  useEffect(() => {
+    setUserXp(100);
+  }, []);
+
+  return (
+    <div className="bg-green-600/70 min-h-[25rem] w-full flex flex-col items-center gap-10 p-10">
+      <h1 className="font-medium text-4xl text-gray-200">Profile</h1>
+      <ProgressCircle
+        initialValue={0}
+        targetValue={userXp}
+        updateMillis={10}
+        progressColor="rgb(168 85 247)"
+        backgroundColor="rgb(55 65 81)"
+        pidGain={0.01}
+        className="w-80 h-80"
+      ></ProgressCircle>
+    </div>
+  );
 }
