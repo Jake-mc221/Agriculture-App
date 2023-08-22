@@ -1,0 +1,22 @@
+{
+  "editor.codeActionsOnSave": {
+    "source.fixAll": true
+  },
+  "eslint.validate": [
+    "mdx",
+  ],
+  "tailwindCSS.experimental.classRegex": [
+    [
+      "cva\\(([^)]*)\\)",
+      "[\"'`]([^\"'`]*).*?[\"'`]"
+    ]
+  ],
+  "editor.quickSuggestions": {
+    "comments": "on",
+    "strings": "on"
+  },
+  "css.lint.unknownAtRules": "ignore",
+  "[mdx]": {
+    "editor.wordWrap": "wordWrapColumn"
+  },
+}
