@@ -7,6 +7,7 @@ export default function Home() {
       <div className="border h-40 w-40 text-black flex justify-center items-center">
         Test App
       </div>
+      
     </main>
   );
 }
