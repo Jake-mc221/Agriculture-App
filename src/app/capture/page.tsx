@@ -10,8 +10,8 @@ export default function Home(){
         </div>
 
         
-        <label >Crop Type
-            <select>
+        <label className="border bg-green-400 p-2">Crop Type
+            <select className="pl-6">
                 <option>Crop1</option>
                 <option>Crop2</option>
                 <option>Crop3</option>
@@ -19,10 +19,10 @@ export default function Home(){
 
             </select>
             </label>
-            <br></br>
-        <label>Soil Type
+            
+        <label className="border bg-green-400 p-2">Soil Type
 
-            <select>
+            <select className="">
            
                 <option>Crop1</option>
                 <option>Crop2</option>
@@ -32,7 +32,7 @@ export default function Home(){
             
             </label>
 
-            <a href="/"> Home Page</a>
+            <a href="/" className="pt-6"> Home Page</a>
             </div>
 
             
