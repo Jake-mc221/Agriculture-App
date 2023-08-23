@@ -1,11 +1,12 @@
+import { Button } from "@/components/common/Button";
 import Link from "next/link";
 
 export default function Login() {
   return (
     <div className="flex-1 flex flex-col gap-20 items-center justify-center bg-white">
       <h1>Welcome Back</h1>
-      <form className="flex flex-col flex-initial gap-5">
-        <label>
+      <form className="flex flex-col flex-initial gap-5 min-w-[20rem]">
+        <label className="flex-1 flex flex-col">
           <h3>Email Address</h3>
           <input
             type="text"
@@ -13,7 +14,7 @@ export default function Login() {
             className="text-gray-600 bg-gray-50 border text-sm rounded-lg p-2"
           />
         </label>
-        <label>
+        <label className="flex-1 flex flex-col">
           <h3>Password</h3>
           <input
             type="text"
@@ -21,15 +22,12 @@ export default function Login() {
             className="text-gray-600 bg-gray-50 border text-sm rounded-lg p-2"
           />
         </label>
-        <button
-          type="submit"
-          className="mt-16 text-white bg-primary hover:bg-green-600 rounded-full text-sm w-full px-5 py-2.5"
-        >
+        <Button type="submit" className="mt-16">
           Login
-        </button>
-        <Link href="/" className="text-primary underline text-sm text-center">
+        </Button>
+        <Button intent="secondary" component={Link} href="/">
           Forgot your password?
-        </Link>
+        </Button>
       </form>
     </div>
   );

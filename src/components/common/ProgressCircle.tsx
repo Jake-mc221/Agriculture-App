@@ -40,7 +40,12 @@ export function ProgressCircle({
     <>
       <div {...divProps}>
         <div className="relative">
-          <svg className="w-full h-full" viewBox="0 0 100 100">
+          <svg
+            className="w-full h-full"
+            width="100px"
+            height="100px"
+            viewBox="0 0 100 100"
+          >
             <defs>
               <radialGradient id={gradientId}>
                 <stop offset="90%" stop-color="black" />
@@ -54,8 +59,8 @@ export function ProgressCircle({
               <rect
                 x="0%"
                 y="0%"
-                width="100%"
-                height="100%"
+                width="100px"
+                height="100px"
                 fill={`url(#${gradientId})`}
               />
             </mask>
@@ -63,14 +68,11 @@ export function ProgressCircle({
             <foreignObject
               x="0%"
               y="0%"
-              width="100%"
-              height="100%"
+              width="100px"
+              height="100px"
               mask={`url(#${maskId})`}
             >
-              <div
-                className="w-full h-full flex items-center justify-center"
-                style={progressGradient}
-              />
+              <div className="w-full h-full" style={progressGradient} />
             </foreignObject>
           </svg>
           <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
