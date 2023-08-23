@@ -1,20 +1,15 @@
+import { Button } from "@/components/common/Button";
 import Link from "next/link";
 
 export default function Page() {
   return (
     <div className="flex-1 flex flex-col items-center justify-center gap-5">
-      <Link
-        href="/login"
-        className="font-medium border p-2 min-w-[6rem] rounded flex justify-center shadow-md"
-      >
+      <Button component={Link} href="/login">
         Login
-      </Link>
-      <Link
-        href="/signup"
-        className="font-medium border p-2 min-w-[6rem] rounded flex justify-center shadow-md"
-      >
+      </Button>
+      <Button component={Link} href="/signup">
         Sign Up
-      </Link>
+      </Button>
     </div>
   );
 }

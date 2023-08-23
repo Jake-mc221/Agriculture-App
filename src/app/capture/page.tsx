@@ -1,3 +1,5 @@
+import { Button } from "@/components/common/Button";
+
 export default function Home() {
   return (
     <div className="flex-1 flex flex-col items-center justify-center gap-2">
@@ -18,9 +20,7 @@ export default function Home() {
           <option>Crop3</option>
         </select>
       </label>
-      <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
-        Capture
-      </button>
+      <Button className="bg-blue-500 hover:bg-blue-700">Capture</Button>
     </div>
   );
 }
