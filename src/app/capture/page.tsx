@@ -20,4 +20,6 @@ export default function Home() {
         </select>
       </label>
       <Button> Capture</Button>
+    </div>
+  );
 }
