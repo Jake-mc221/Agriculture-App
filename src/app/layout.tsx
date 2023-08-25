@@ -2,6 +2,7 @@ import NavigationBar from "@/components/core/NavigationBar";
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { CapacitorPwaLoader } from "@/components/utility/CapacitorPwaLoader";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,9 +25,10 @@ export default function RootLayout({
       <body className={`flex flex-col w-full min-h-screen ${inter.className}`}>
         <main className="relative flex flex-col flex-1 items-center">
           {children}
+          <CapacitorPwaLoader />
         </main>
         <footer>
-          <NavigationBar></NavigationBar>
+          <NavigationBar />
         </footer>
       </body>
     </html>
