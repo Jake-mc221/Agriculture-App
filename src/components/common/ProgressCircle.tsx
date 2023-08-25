@@ -49,8 +49,8 @@ export function ProgressCircle({
             <defs>
               <radialGradient id={gradientId}>
                 <stop offset="90%" stopColor="black" />
-                <stop offset="91%" stopColor="white" />
-                <stop offset="99%" stopColor="white" />
+                <stop offset="90.5%" stopColor="white" />
+                <stop offset="99.5%" stopColor="white" />
                 <stop offset="100%" stopColor="black" />
               </radialGradient>
             </defs>

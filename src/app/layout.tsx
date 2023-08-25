@@ -22,8 +22,10 @@ export default function RootLayout({
         name="viewport"
         content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0"
       ></meta>
-      <body className={`flex flex-col w-full min-h-screen ${inter.className}`}>
-        <main className="relative flex flex-col flex-1 items-center">
+      <body
+        className={`flex flex-col w-full min-h-screen items-center ${inter.className}`}
+      >
+        <main className="relative flex flex-col flex-1 w-full items-center">
           {children}
           <CapacitorPwaLoader />
         </main>
