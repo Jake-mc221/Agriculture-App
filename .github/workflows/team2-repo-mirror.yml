@@ -1,0 +1,24 @@
+name: Team 2 Bitbucket Mirror
+
+on: push
+
+# Only allow one mirror job to run at a time, cancel old jobs
+concurrency:
+  group: team2_mirror
+  cancel-in-progress: true
+
+jobs:
+  mirror:
+    runs-on: "ubuntu-latest"
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # Fetch all history for all branches and tags
+
+      - name: Mirror to Bitbucket
+        uses: yesolutions/mirror-action@v0.7.0
+        with:
+          REMOTE: https://usyd_chenky@bitbucket.org/usyd_chenky/ag-data-app.git
+          GIT_USERNAME: usyd_chenky
+          GIT_PASSWORD: ${{ secrets.USYD_CHENKY_MIRROR_PASSWORD }}
