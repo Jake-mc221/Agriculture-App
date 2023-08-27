@@ -26,7 +26,7 @@ export default function SignUp() {
       <Link href="/login" legacyBehavior>
         <a className="absolute top-2 right-2 text-black hover:text-gray-700">Login</a>
       </Link>
-      <Link href="/login" legacyBehavior>
+      <Link href="/" legacyBehavior>
         <a className="absolute top-2 left-2 text-black hover:text-gray-700">x</a>
       </Link>
       <div className="text-4xl pt-5">Sign Up</div>
@@ -53,7 +53,7 @@ export default function SignUp() {
         <label htmlFor={id}>I agree to the terms & conditions</label>
         <Button
           component={Link}
-          href="/profile"
+          href="/home"
           type="submit"
           className="mt-16"
         >

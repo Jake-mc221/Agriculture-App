@@ -48,7 +48,7 @@ export default function Login() {
     </label>
         <Button
           component={Link}
-          href="/profile"
+          href="/home"
           type="submit"
           className="mt-16"
         >

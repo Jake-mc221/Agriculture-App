@@ -21,7 +21,7 @@ export default function NavigationBar() {
           </Button>
 
           <div className="flex-1 flex flex-row justify-around items-center border border-t border-slate-10">
-            <Button intent="unstyled" component={Link} href="/">
+            <Button intent="unstyled" component={Link} href="/home">
               <BiHomeSmile className="text-3xl text-gray-600" />
             </Button>
             <Button intent="unstyled" component={Link} href="/label">
