@@ -1,4 +1,5 @@
 import { BiHomeSmile } from "react-icons/bi";
+import { FaSearch } from "react-icons/fa";
 import { FaRankingStar } from "react-icons/fa6";
 import { BsPerson } from "react-icons/bs";
 import { LuScanLine } from "react-icons/lu";
@@ -21,8 +22,8 @@ export default function NavigationBar() {
           </Button>
 
           <div className="flex-1 flex flex-row justify-around items-center border border-t border-slate-10">
-            <Button intent="unstyled" component={Link} href="/home">
-              <BiHomeSmile className="text-3xl text-gray-600" />
+            <Button intent="unstyled" component={Link} href="/search">
+              <FaSearch className="text-3xl text-gray-600" />
             </Button>
             <Button intent="unstyled" component={Link} href="/label">
               <MdAddChart className="text-3xl text-gray-600" />

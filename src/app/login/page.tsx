@@ -18,37 +18,31 @@ export default function Login() {
           <input
             type="text"
             placeholder="email@example.com"
-            className="text-gray-600 bg-gray-50 border text-sm rounded-lg p-2"
+            className="bg-gray-100 p-3 rounded ring-1 ring-gray-200 min-w-[20rem]"
           />
         </label>
-        {/* <label className="flex-1 flex flex-col">
-          <h3>Password</h3>
-          <input
-            type="password"
-            placeholder="enter password"
-            className="text-gray-600 bg-gray-50 border text-sm rounded-lg p-2"
-          />
-        </label> */}
         <label className="flex-1 flex flex-col">
       <h3>Password</h3>
       <div className="relative">
         <input
           type={showPassword ? 'text' : 'password'}
           placeholder="enter password"
-          className="text-gray-600 bg-gray-50 border text-sm rounded-lg p-2"
+          className="bg-gray-100 p-3 rounded ring-1 ring-gray-200 min-w-[20rem]"
         />
-        <button 
-          type="button" 
-          onClick={togglePasswordVisibility} 
-          className="absolute right-2 top-1/2 transform -translate-y-1/2"
-        >
+        <div>
+          <button 
+            type="button" 
+            onClick={togglePasswordVisibility} 
+            className="absolute right-2 top-1/2 transform -translate-y-1/2"
+          >
           {showPassword ? 'Hide' : 'Show'}
         </button>
+        </div>
       </div>
     </label>
         <Button
           component={Link}
-          href="/home"
+          href="/profile"
           type="submit"
           className="mt-16"
         >
