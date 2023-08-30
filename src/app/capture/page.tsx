@@ -47,10 +47,10 @@ export default function Home() {
           <option>Crop3</option>
         </Select>
 
-        <Select label="Crop Type">
-          <option>Crop1</option>
-          <option>Crop2</option>
-          <option>Crop3</option>
+        <Select label="Soil Type">
+          <option>Soil1</option>
+          <option>Soil2</option>
+          <option>Soil3</option>
         </Select>
       </div>
     </PageContainer>
