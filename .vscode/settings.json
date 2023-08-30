@@ -26,5 +26,6 @@
   },
   "[typescriptreact]": {
     "editor.tabSize": 2
-  }
+  },
+  "java.configuration.updateBuildConfiguration": "disabled"
 }
