@@ -1,11 +1,10 @@
 "use client";
-
+import axios from "axios";
 import { Button } from "@/components/common/Button";
 import { useEffect, useState } from "react";
-import ComboBoxWithLabel from "@/components/common/ComboBoxWithLabel";
-
+// import ComboBoxWithLabel from "@/components/common/ComboBoxWithLabel";
+import ComboBox from "@/components/common/ComboBox";
 export default function Page() {
-  
   const [count, setCount] = useState<number>(0);
   const [cropsType, setCropsType] = useState<string>("");
   const [soilType, setSoilType] = useState<string>("");
@@ -19,10 +18,15 @@ export default function Page() {
   const inputFont = "block text-sm font-medium text-gray-700 w-36";
 
   const options = [
-    { value: "option1", label: "Option 1" },
+    { value: "Hello", label: "Hello" },
     { value: "option2", label: "Option 2" },
     { value: "option3", label: "Option 3" },
   ];
+
+  const [searchLocation, setSearchLocation] = useState<string>("");
+  const [suggestedLocations, setSuggestedLocations] = useState<any[]>([]);
+
+  const MAPBOX_ACCESS_TOKEN = "pk.eyJ1IjoieWNoZTMzNDAiLCJhIjoiY2xsdzJrYzhsMW1lcTNrczJ0c3RtNGk2MyJ9.VQ36wZakYJmHuptA8BHkLQ";
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -45,9 +49,37 @@ export default function Page() {
       locationLat,
     );
   }, [count]);
+
+  const fetchLocations = async (query: string) => {
+    const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(
+      query
+    )}.json?access_token=${MAPBOX_ACCESS_TOKEN}`;
+    try {
+      const response = await axios.get(url);
+      setSuggestedLocations(response.data.features);
+    } catch (error) {
+      console.error("An error occurred:", error);
+    }
+  };
+
+  const handleLocationChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const query = e.target.value;
+    setSearchLocation(query);
+    if (query) {
+      fetchLocations(query);
+    } else {
+      setSuggestedLocations([]);
+    }
+  };
+
+  const handleSelectLocation = (place_name: string) => {
+    setSearchLocation(place_name);
+    setSuggestedLocations([]);
+  };
+
   return (
     <div className="min-h-[25rem] w-full flex flex-col items-center gap-10 p-10 bg-white">
-      <div className="p-8 bg-white rounded-lg w-96">
+      <div className="p-8 bg-white shadow-md rounded-lg w-96">
         <button
           onClick={handleClick}
           className="relative right-15 text-green-400"
@@ -56,46 +88,64 @@ export default function Page() {
         </button>
         <br />
         <label className="block text-xl font-bold text-gray-700 w-36">
-          🔍 Filter
+          Filter
         </label>
+
         <br />
         <div>
-          <ComboBoxWithLabel label="Soil Type" options={options} />
+          <ComboBox
+            label="Soil Type"
+            options={options}
+            placeholder="Select an option"
+          />
         </div>
         <br />
         <div>
-          <ComboBoxWithLabel label="Crop Type" options={options} />
+          <ComboBox
+            label="Crop Type"
+            options={options}
+            placeholder="Select an option"
+          />
         </div>
         <br />
         <div>
-          <ComboBoxWithLabel label="Health" options={options} />
+          <ComboBox
+            label="Health"
+            options={options}
+            placeholder="Select an option"
+          />
         </div>
         <br />
         <div>
-          <ComboBoxWithLabel label="Time Period" options={options} />
+          <ComboBox
+            label="Time"
+            options={options}
+            placeholder="Select an option"
+          />
         </div>
         <br />
         <label className="block text-xl font-bold text-gray-700 w-36">
-          📍 Location
+          Location
         </label>
         <br />
         <div className={inputContainer}>
-          <label className={inputFont}>long</label>
+          <label className={inputFont}>Location Name</ label>
           <input
             type="text"
-            onChange={(e) => setLocationLong(String(e.target.value))}
+            value={searchLocation}
+            onChange={handleLocationChange}
             className={inputClassName}
-          />
-        </div>
-        <br />
-        <div className={inputContainer}>
-          <label className={inputFont}> lat</label>
-          <input
-            type="text"
-            id="location_lat"
-            onChange={(e) => setLocationLat(String(e.target.value))}
-            className={inputClassName}
-          />
+        />
+          <ul>
+            {suggestedLocations.map((location) => (
+              <li
+                key={location.id}
+                onClick={() => handleSelectLocation(location.place_name)}
+              >
+                {location.place_name}
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
       <Button
