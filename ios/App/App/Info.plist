@@ -47,7 +47,9 @@
 	<true/>
 
 	<key>NSCameraUsageDescription</key>
-	<string>App requires access to camera for takinga photo</string>
+	<string>App requires access to camera for taking a photo</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>App requires access to library to upload a photo</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>App requires access to library to upload a photo</string>
 </dict>

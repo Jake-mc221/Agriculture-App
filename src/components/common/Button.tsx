@@ -26,7 +26,7 @@ export function Button<T extends ElementType>({
   children,
   className,
   ...buttonProps
-}: { component?: T } & PropsWithChildren &
+}: { component?: T; className?: string } & PropsWithChildren &
   ComponentPropsWithoutRef<T> &
   VariantProps<typeof buttonStyles>) {
   const Component: ElementType = component || "button";
