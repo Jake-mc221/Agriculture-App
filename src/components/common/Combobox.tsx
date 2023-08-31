@@ -3,12 +3,12 @@ import { Combobox, Transition } from "@headlessui/react";
 import { CheckIcon, ChevronDownIcon } from "@heroicons/react/20/solid";
 
 const labels = [
-  { id: 1, name: "Wade Cooper" },
-  { id: 2, name: "Arlene Mccoy" },
-  { id: 3, name: "Devon Webb" },
-  { id: 4, name: "Tom Cook" },
-  { id: 5, name: "Tanya Fox" },
-  { id: 6, name: "Hellen Schmidt" },
+  { id: 1, name: "Select an option" },
+  { id: 2, name: "Option 1" },
+  { id: 3, name: "Option 2" },
+  { id: 4, name: "Option 3" },
+  { id: 5, name: "Option 4" },
+  { id: 6, name: "Option 5" },
 ];
 
 export function LabelCombobox() {
@@ -78,7 +78,7 @@ export function LabelCombobox() {
                         {selected ? (
                           <span
                             className={`absolute inset-y-0 left-0 flex items-center pl-3 ${
-                              active ? "text-white" : "bg-primary"
+                              active ? "bg-primary text-white" : "text-gray-900"
                             }`}
                           >
                             <CheckIcon className="h-5 w-5" aria-hidden="true" />
