@@ -1,5 +1,6 @@
 import { MdEnergySavingsLeaf } from "react-icons/md";
 import { MdInfo } from "react-icons/md";
+import NavigationBar from "@/components/core/NavigationBar";
 
 export default function PlantHealth() {
   return (
@@ -19,6 +20,9 @@ export default function PlantHealth() {
         </div>
         <MdInfo className="absolute bottom-0 left-0 text-primary w-10 h-10" />
       </div>
+      <footer>
+        <NavigationBar></NavigationBar>
+      </footer>
     </div>
   );
 }
