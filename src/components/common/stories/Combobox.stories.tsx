@@ -1,13 +1,22 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { TextInput } from "./TextInput";
+import { LabelCombobox } from "../Combobox";
 
-const meta: Meta<typeof TextInput> = {
-  component: TextInput,
+const meta: Meta<typeof LabelCombobox> = {
+  component: LabelCombobox,
 };
 
 export default meta;
-type Story = StoryObj<typeof TextInput>;
+type Story = StoryObj<typeof LabelCombobox>;
+
+const options = [
+  { id: 1, name: "Select an option" },
+  { id: 2, name: "Option 1" },
+  { id: 3, name: "Option 2" },
+  { id: 4, name: "Option 3" },
+  { id: 5, name: "Option 4" },
+  { id: 6, name: "Option 5" },
+];
 
 /*
  *👇 Render functions are a framework specific feature to allow you control on how the component renders.
@@ -17,7 +26,7 @@ type Story = StoryObj<typeof TextInput>;
 export const Primary: Story = {
   render: () => (
     <div className="h-full flex flex-col items-center justify-center gap-5">
-      <TextInput />
+      <LabelCombobox labels={options} />
     </div>
   ),
 };

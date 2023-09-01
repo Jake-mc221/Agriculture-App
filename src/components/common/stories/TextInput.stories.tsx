@@ -1,13 +1,13 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { Radio } from "./Radio";
+import { TextInput } from "../TextInput";
 
-const meta: Meta<typeof Radio> = {
-  component: Radio,
+const meta: Meta<typeof TextInput> = {
+  component: TextInput,
 };
 
 export default meta;
-type Story = StoryObj<typeof Radio>;
+type Story = StoryObj<typeof TextInput>;
 
 /*
  *👇 Render functions are a framework specific feature to allow you control on how the component renders.
@@ -17,7 +17,7 @@ type Story = StoryObj<typeof Radio>;
 export const Primary: Story = {
   render: () => (
     <div className="h-full flex flex-col items-center justify-center gap-5">
-      <Radio />
+      <TextInput prompt={"Type something..."} />
     </div>
   ),
 };

@@ -2,16 +2,7 @@ import { Fragment, useState } from "react";
 import { Combobox, Transition } from "@headlessui/react";
 import { CheckIcon, ChevronDownIcon } from "@heroicons/react/20/solid";
 
-const labels = [
-  { id: 1, name: "Select an option" },
-  { id: 2, name: "Option 1" },
-  { id: 3, name: "Option 2" },
-  { id: 4, name: "Option 3" },
-  { id: 5, name: "Option 4" },
-  { id: 6, name: "Option 5" },
-];
-
-export function LabelCombobox() {
+export function LabelCombobox({ labels }) {
   const [selected, setSelected] = useState(labels[0]);
   const [query, setQuery] = useState("");
 

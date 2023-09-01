@@ -1,22 +1,7 @@
 import { useState } from "react";
 import { RadioGroup } from "@headlessui/react";
 
-const options = [
-  {
-    name: "Option 1",
-    description: "description",
-  },
-  {
-    name: "Option 2",
-    description: "description",
-  },
-  {
-    name: "Option 3",
-    description: "description",
-  },
-];
-
-export function Radio() {
+export function Radio({ options }) {
   const [selected, setSelected] = useState(options[0]);
 
   return (
