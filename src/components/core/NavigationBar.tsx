@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import { BiHomeSmile } from "react-icons/bi";
+import { FaSearch } from "react-icons/fa";
 import { FaRankingStar } from "react-icons/fa6";
 import { BsPerson } from "react-icons/bs";
 import { LuScanLine } from "react-icons/lu";
@@ -28,7 +28,7 @@ export default function NavigationBar() {
             <LuScanLine className="text-3xl text-gray-600" />
           </Button>
 
-          <div className="flex-1 flex flex-row justify-around items-center border border-t border-slate-10 ">
+          <div className="flex-1 flex flex-row justify-around items-center border border-t border-slate-10">
             <Button
               className={
                 "w-full h-full rounded-md flex " +
@@ -37,9 +37,9 @@ export default function NavigationBar() {
               onClick={() => changeActive("home")}
               intent="unstyled"
               component={Link}
-              href="/"
+              href="/search"
             >
-              <BiHomeSmile className="text-3xl text-gray-600 m-auto" />
+              <FaSearch className="text-3xl text-gray-600 m-auto" />
             </Button>
             <Button
               className={
