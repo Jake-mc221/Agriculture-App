@@ -14,7 +14,6 @@ export default function Bounding() {
       left: boxPosition.left + e.movementX,
       top: boxPosition.top + e.movementY,
     });
-    console.log(boxPosition.left + " " + boxPosition.top);
   };
 
   return (
