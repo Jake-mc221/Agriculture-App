@@ -1,6 +1,9 @@
 name: Team 2 Bitbucket Mirror
 
-on: push
+on:
+  schedule:
+    - cron: "58 23 * * *" # Run task everyday on 2358
+  workflow_dispatch:
 
 # Only allow one mirror job to run at a time, cancel old jobs
 concurrency:

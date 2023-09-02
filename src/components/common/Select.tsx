@@ -1,5 +1,9 @@
 import { VariantProps, cva } from "class-variance-authority";
-import { ComponentPropsWithRef, PropsWithChildren } from "react";
+import {
+  ComponentPropsWithoutRef,
+  ForwardedRef,
+  PropsWithChildren,
+} from "react";
 import { twMerge } from "tailwind-merge";
 import { BsChevronDown } from "react-icons/bs";
 import { forwardRef } from "react";
@@ -11,14 +15,17 @@ const selectStyles = cva(
   },
 );
 
-export const Select = forwardRef(function Select({
-  children,
-  label,
-  className,
-  ...selectProps
-}: { label: string; className?: string } & PropsWithChildren &
-  ComponentPropsWithRef<"select"> &
-  VariantProps<typeof selectStyles>) {
+export const Select = forwardRef(function Select(
+  {
+    children,
+    label,
+    className,
+    ...selectProps
+  }: { label: string; className?: string } & PropsWithChildren &
+    ComponentPropsWithoutRef<"select"> &
+    VariantProps<typeof selectStyles>,
+  ref: ForwardedRef<HTMLSelectElement>,
+) {
   return (
     <label className="flex flex-col">
       <h3>{label}</h3>
@@ -29,7 +36,8 @@ export const Select = forwardRef(function Select({
         )}
       >
         <select
-          {...(selectProps as ComponentPropsWithRef<"select">)}
+          {...(selectProps as ComponentPropsWithoutRef<"select">)}
+          ref={ref}
           className="w-full h-full outline-none border-none bg-transparent"
         >
           {children}
