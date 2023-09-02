@@ -16,6 +16,7 @@ export default function Home() {
         {image ? (
           /* eslint-disable-next-line @next/next/no-img-element */
           <img
+            style={{ marginLeft: "auto", marginRight: "auto" }}
             src={image.dataUrl}
             width={200}
             height={200}

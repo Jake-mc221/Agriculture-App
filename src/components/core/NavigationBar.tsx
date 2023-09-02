@@ -13,7 +13,6 @@ export default function NavigationBar() {
   const [activeLink, setActiveLink] = useState("home"); // current active link is home
   const changeActive = (link: SetStateAction<string>) => {
     setActiveLink(link);
-    console.log("changed link: " + activeLink);
   };
   return (
     <>
