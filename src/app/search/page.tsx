@@ -1,12 +1,13 @@
 "use client";
 import { Button } from "@/components/common/Button";
 import { useEffect, useState } from "react";
-import ComboBox from "@/components/common/ComboBox";
+import { ComboBox } from "@/components/common/ComboBox";
 import Link from "next/link";
 import { PageContainer } from "@/components/common/PageContainer";
+import { useForm } from "react-hook-form";
 
 export default function Page() {
-  const [count, setCount] = useState<number>(0);
+  const { register } = useForm();
   const [cropsType, setCropsType] = useState<string>("");
   const [soilType, setSoilType] = useState<string>("");
   const [locationLong, setLocationLong] = useState<string>("");
@@ -28,36 +29,6 @@ export default function Page() {
 
   const MAPBOX_ACCESS_TOKEN =
     "pk.eyJ1IjoieWNoZTMzNDAiLCJhIjoiY2xsdzJrYzhsMW1lcTNrczJ0c3RtNGk2MyJ9.VQ36wZakYJmHuptA8BHkLQ";
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCount(0);
-    }, 2000);
-
-    return () => {
-      clearInterval(interval);
-    };
-  }, []);
-
-  useEffect(() => {
-    console.log(
-      count,
-      cropsType,
-      soilType,
-      timePeriod,
-      healthStatus,
-      locationLong,
-      locationLat,
-    );
-  }, [
-    count,
-    cropsType,
-    healthStatus,
-    locationLat,
-    locationLong,
-    soilType,
-    timePeriod,
-  ]);
 
   const fetchLocations = async (query: string) => {
     const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(
@@ -104,6 +75,7 @@ export default function Page() {
             <ComboBox
               label="Soil Type"
               options={options}
+              getOptionName={(option) => option.label}
               placeholder="Select an option"
             />
           </div>
@@ -111,6 +83,7 @@ export default function Page() {
             <ComboBox
               label="Crop Type"
               options={options}
+              getOptionName={(option) => option.label}
               placeholder="Select an option"
             />
           </div>
@@ -118,6 +91,7 @@ export default function Page() {
             <ComboBox
               label="Health"
               options={options}
+              getOptionName={(option) => option.label}
               placeholder="Select an option"
             />
           </div>
@@ -125,32 +99,22 @@ export default function Page() {
             <ComboBox
               label="Time"
               options={options}
+              getOptionName={(option) => option.label}
               placeholder="Select an option"
             />
           </div>
-          <label className="block text-xl font-bold text-gray-700">
-            Location
-          </label>
         </div>
-        <label className="text-sm font-medium text-gray-700">
-          Location Name
-          <input
-            type="text"
-            value={searchLocation}
-            onChange={handleLocationChange}
-            className="mt-1 p-2 w-full border rounded-md"
-          />
-        </label>
-        <ul>
-          {suggestedLocations.map((location) => (
-            <li
-              key={location.id}
-              onClick={() => handleSelectLocation(location.place_name)}
-            >
-              {location.place_name}
-            </li>
-          ))}
-        </ul>
+        <ComboBox
+          label="Location"
+          options={async (query: string) => {
+            const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(
+              query,
+            )}.json?access_token=${MAPBOX_ACCESS_TOKEN}`;
+            const response = await (await fetch(url)).json();
+            return response.features;
+          }}
+          getOptionName={(option) => option.place_name}
+        />
         <Button component={Link} href={"images"}>
           Confirm
         </Button>
