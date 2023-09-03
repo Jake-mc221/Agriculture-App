@@ -6,11 +6,41 @@ import { Select } from "@/components/common/Select";
 import { Camera, CameraResultType, Photo } from "@capacitor/camera";
 import { Capacitor } from "@capacitor/core";
 import { Filesystem, Directory } from "@capacitor/filesystem";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { TbPhoto } from "react-icons/tb";
+import { Image } from "../types/Image";
+import { Preferences } from "@capacitor/preferences";
+
+const PHOTOS_PREF_KEY = "photos";
 
 export default function Home() {
   const [image, setImage] = useState<Photo>();
+  const [images, setImages] = useState<Image[]>([]);
+
+  useEffect(() => {
+    const loadSaved = async () => {
+      const { value } = await Preferences.get({ key: PHOTOS_PREF_KEY });
+      const photosInPrefs: Image[] = value ? JSON.parse(value) : [];
+
+      if (Capacitor.isNativePlatform()) {
+        for (const photo of photosInPrefs) {
+          const file = await Filesystem.readFile({
+            path: photo.filepath,
+            directory: Directory.Data,
+          });
+          photo.webviewPath = "data:image/jpeg:base64,${file.data}";
+        }
+      }
+      setImages(photosInPrefs);
+    };
+    loadSaved();
+  }, []);
+
+  useEffect(() => {
+    if (images.length > 0) {
+      Preferences.set({ key: PHOTOS_PREF_KEY, value: JSON.stringify(images) });
+    }
+  }, [images]);
 
   {
     /** Helpful funciton for saving the images */
@@ -24,7 +54,7 @@ export default function Home() {
       });
       return file.data;
     } else {
-      const response = await fetch(photo.webPath as string);
+      const response = await fetch(photo.webPath!);
       const blob = await response.blob();
       return (await convertBlobToBase64(blob)) as string;
     }
@@ -35,7 +65,11 @@ export default function Home() {
       const reader = new FileReader();
       reader.onerror = reject;
       reader.onload = () => {
-        resolve(reader.result);
+        if (typeof reader.result === "string") {
+          resolve(reader.result);
+        } else {
+          reject("method did not return a string");
+        }
       };
       reader.readAsDataURL(blob);
     });
@@ -51,6 +85,7 @@ export default function Home() {
       data: base64Data,
       directory: Directory.Data,
     });
+    console.log("~ savedFile:", savedfile);
 
     // To view the immage, load it from the webpath since its already loaded into memory
     return {
@@ -69,7 +104,9 @@ export default function Home() {
         }),
       );
       if (image) {
-        await savePhoto(image);
+        const newSavedImage = await savePhoto(image);
+        setImages([...images, newSavedImage]);
+        console.log("~file: user :", image);
       }
     } catch (e) {
       return;
