@@ -19,6 +19,8 @@ export function ComboBox<T>({
     typeof options !== "function" ? options : [],
   );
 
+  console.log(availableOptions);
+
   useEffect(() => {
     (async () => {
       setAvailableOptions(
@@ -61,7 +63,6 @@ export function ComboBox<T>({
           leave="transition ease-in duration-100"
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
-          afterLeave={() => setQuery("")}
         >
           <Combobox.Options className="absolute mt-1 z-10 max-h-60 w-full overflow-auto rounded-md bg-white text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
             {availableOptions.length === 0 ? (
@@ -79,7 +80,7 @@ export function ComboBox<T>({
                   }
                   value={option}
                 >
-                  {({ selected, active }) => (
+                  {({ selected }) => (
                     <>
                       <span
                         className={`block truncate ${
@@ -88,15 +89,6 @@ export function ComboBox<T>({
                       >
                         {getOptionName(option)}
                       </span>
-                      {selected ? (
-                        <span
-                          className={`absolute inset-y-0 left-0 flex items-center pl-3 ${
-                            active ? "bg-primary text-white" : "text-gray-900"
-                          }`}
-                        >
-                          <BsCheck className="h-5 w-5" aria-hidden />
-                        </span>
-                      ) : null}
                     </>
                   )}
                 </Combobox.Option>
