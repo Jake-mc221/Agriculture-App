@@ -59,7 +59,7 @@ export default function Page() {
 
   return (
     <PageContainer>
-      <div className="min-h-[25rem] w-full flex flex-col gap-5 bg-white">
+      <div className="flex flex-col gap-5 bg-white">
         <div className="flex flex-col gap-5">
           <Button
             intent="unstyled"
