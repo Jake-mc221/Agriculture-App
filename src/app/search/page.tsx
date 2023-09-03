@@ -1,9 +1,10 @@
 "use client";
-import axios from "axios";
 import { Button } from "@/components/common/Button";
 import { useEffect, useState } from "react";
-// import ComboBoxWithLabel from "@/components/common/ComboBoxWithLabel";
 import ComboBox from "@/components/common/ComboBox";
+import Link from "next/link";
+import { PageContainer } from "@/components/common/PageContainer";
+
 export default function Page() {
   const [count, setCount] = useState<number>(0);
   const [cropsType, setCropsType] = useState<string>("");
@@ -13,10 +14,6 @@ export default function Page() {
   const [timePeriod, setTimePeriod] = useState<string>("");
   const [healthStatus, setHealthStatus] = useState<string>("");
 
-  const inputContainer = "mb-4 flex items-center";
-  const inputClassName = "mt-1 p-2 w-full border rounded-md";
-  const inputFont = "block text-sm font-medium text-gray-700 w-36";
-
   const options = [
     { value: "Hello", label: "Hello" },
     { value: "option2", label: "Option 2" },
@@ -24,9 +21,13 @@ export default function Page() {
   ];
 
   const [searchLocation, setSearchLocation] = useState<string>("");
+  // You can't use the 'any' type, it's not allowed. If you have linting setup correctly you should see an error here.
+  // "Unexpected any. Specify a different type.eslint@typescript-eslint/no-explicit-any"
+  // Please fix this typing up!
   const [suggestedLocations, setSuggestedLocations] = useState<any[]>([]);
 
-  const MAPBOX_ACCESS_TOKEN = "pk.eyJ1IjoieWNoZTMzNDAiLCJhIjoiY2xsdzJrYzhsMW1lcTNrczJ0c3RtNGk2MyJ9.VQ36wZakYJmHuptA8BHkLQ";
+  const MAPBOX_ACCESS_TOKEN =
+    "pk.eyJ1IjoieWNoZTMzNDAiLCJhIjoiY2xsdzJrYzhsMW1lcTNrczJ0c3RtNGk2MyJ9.VQ36wZakYJmHuptA8BHkLQ";
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -48,15 +49,23 @@ export default function Page() {
       locationLong,
       locationLat,
     );
-  }, [count]);
+  }, [
+    count,
+    cropsType,
+    healthStatus,
+    locationLat,
+    locationLong,
+    soilType,
+    timePeriod,
+  ]);
 
   const fetchLocations = async (query: string) => {
     const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(
-      query
+      query,
     )}.json?access_token=${MAPBOX_ACCESS_TOKEN}`;
     try {
-      const response = await axios.get(url);
-      setSuggestedLocations(response.data.features);
+      const response = await (await fetch(url)).json();
+      setSuggestedLocations(response.features);
     } catch (error) {
       console.error("An error occurred:", error);
     }
@@ -78,91 +87,74 @@ export default function Page() {
   };
 
   return (
-    <div className="min-h-[25rem] w-full flex flex-col items-center gap-10 p-10 bg-white">
-      <div className="p-8 bg-white shadow-md rounded-lg w-96">
-        <button
-          onClick={handleClick}
-          className="relative right-15 text-green-400"
-        >
-          Back
-        </button>
-        <br />
-        <label className="block text-xl font-bold text-gray-700 w-36">
-          Filter
-        </label>
-
-        <br />
-        <div>
-          <ComboBox
-            label="Soil Type"
-            options={options}
-            placeholder="Select an option"
-          />
+    <PageContainer>
+      <div className="min-h-[25rem] w-full flex flex-col gap-5 bg-white">
+        <div className="flex flex-col gap-5">
+          <Button
+            intent="unstyled"
+            className="w-5 text-primary underline"
+            href="profile"
+          >
+            Back
+          </Button>
+          <label className="block text-xl font-bold text-gray-700">
+            Filter
+          </label>
+          <div>
+            <ComboBox
+              label="Soil Type"
+              options={options}
+              placeholder="Select an option"
+            />
+          </div>
+          <div>
+            <ComboBox
+              label="Crop Type"
+              options={options}
+              placeholder="Select an option"
+            />
+          </div>
+          <div>
+            <ComboBox
+              label="Health"
+              options={options}
+              placeholder="Select an option"
+            />
+          </div>
+          <div>
+            <ComboBox
+              label="Time"
+              options={options}
+              placeholder="Select an option"
+            />
+          </div>
+          <label className="block text-xl font-bold text-gray-700">
+            Location
+          </label>
         </div>
-        <br />
-        <div>
-          <ComboBox
-            label="Crop Type"
-            options={options}
-            placeholder="Select an option"
-          />
-        </div>
-        <br />
-        <div>
-          <ComboBox
-            label="Health"
-            options={options}
-            placeholder="Select an option"
-          />
-        </div>
-        <br />
-        <div>
-          <ComboBox
-            label="Time"
-            options={options}
-            placeholder="Select an option"
-          />
-        </div>
-        <br />
-        <label className="block text-xl font-bold text-gray-700 w-36">
-          Location
-        </label>
-        <br />
-        <div className={inputContainer}>
-          <label className={inputFont}>Location Name</ label>
+        <label className="text-sm font-medium text-gray-700">
+          Location Name
           <input
             type="text"
             value={searchLocation}
             onChange={handleLocationChange}
-            className={inputClassName}
-        />
-          <ul>
-            {suggestedLocations.map((location) => (
-              <li
-                key={location.id}
-                onClick={() => handleSelectLocation(location.place_name)}
-              >
-                {location.place_name}
-              </li>
-            ))}
-          </ul>
-        </div>
+            className="mt-1 p-2 w-full border rounded-md"
+          />
+        </label>
+        <ul>
+          {suggestedLocations.map((location) => (
+            <li
+              key={location.id}
+              onClick={() => handleSelectLocation(location.place_name)}
+            >
+              {location.place_name}
+            </li>
+          ))}
+        </ul>
+        <Button component={Link} href={"images"}>
+          Confirm
+        </Button>
       </div>
-      <Button
-        onClick={() => {
-          // setCount(count + 1);
-          handleConfirm();
-        }}
-        style={{ width: "300px" }} // Adjust the width as needed
-      >
-        Confirm
-      </Button>
-    </div>
+    </PageContainer>
   );
-  function handleClick() {
-    window.location.href = "profile";
-  }
-  function handleConfirm() {
-    window.location.href = "images";
-  }
 }
