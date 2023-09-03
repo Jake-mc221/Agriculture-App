@@ -6,15 +6,20 @@ import { Select } from "@/components/common/Select";
 import { Camera, CameraResultType, Photo } from "@capacitor/camera";
 import { Capacitor } from "@capacitor/core";
 import { Filesystem, Directory } from "@capacitor/filesystem";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { TbPhoto } from "react-icons/tb";
+import { LuInspect } from "react-icons/lu";
+import Bounding from "@/components/common/Bounding";
 
 export default function Home() {
   const [image, setImage] = useState<Photo>();
+  const [isBounding, setIsBounding] = useState<boolean>(false);
 
   {
-    /** Helpful funciton for saving the images */
+    /** Helpful function for saving the images */
   }
+
+  useEffect(() => {}, [isBounding]); // updates isBounding prop in child elements when it changes
 
   const readAsBase64 = async (photo: Photo) => {
     // Fetching the photo, reading it as a blob and then converting it into base 64 format.
@@ -44,7 +49,7 @@ export default function Home() {
     // conver the phtoto to a base64 format, required by the Filesystem API to save.
     const base64Data = await readAsBase64(photo);
 
-    // Wrtie the data into the data directory.
+    // Write the data into the data directory.
     const filename = Date.now() + ".jpeg";
     const savedfile = await Filesystem.writeFile({
       path: filename,
@@ -52,7 +57,7 @@ export default function Home() {
       directory: Directory.Data,
     });
 
-    // To view the immage, load it from the webpath since its already loaded into memory
+    // To view the image, load it from the webpath since its already loaded into memory
     return {
       filepath: filename,
       webviewPath: photo.webPath,
@@ -77,18 +82,32 @@ export default function Home() {
   };
   return (
     <PageContainer>
-      <div className="w-full flex-grow flex flex-col gap-5">
+      {/* Button for the bounding box */}
+      <Button intent="unstyled" onClick={() => setIsBounding(!isBounding)}>
+        <LuInspect
+          className={
+            "hover:bg-slate-100 md-rounded m-1 " + (!image ? "hidden" : "")
+          }
+        />
+      </Button>
+      <div className="flex-grow flex flex-col gap-5">
         {image ? (
-          /* eslint-disable-next-line @next/next/no-img-element */
-          <img
-            style={{ marginLeft: "auto", marginRight: "auto" }}
-            src={image.dataUrl}
-            width={200}
-            height={200}
-            alt="Captured image"
+          <Bounding
+            image={
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                style={{ marginLeft: "auto", marginRight: "auto" }}
+                className="z-0"
+                src={image.dataUrl}
+                width={300}
+                height={300}
+                alt="Captured image"
+              />
+            }
+            isBounding={isBounding}
           />
         ) : (
-          <div className="flex-1 bg-gray-200 rounded border border-black/20 flex items-center justify-center">
+          <div className="flex-grow bg-gray-200 rounded border border-black/20 flex items-center justify-center">
             <TbPhoto aria-hidden className="text-3xl" />
           </div>
         )}

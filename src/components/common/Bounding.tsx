@@ -1,27 +1,34 @@
 "use client";
 
-import { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 
-export default function Resizable() {
+export type BoundingProps = {
+  image: React.ReactElement;
+  isBounding: boolean;
+};
+
+
+export default function Bounding({ image, isBounding }: BoundingProps) {
   const constraintsRef = useRef(null);
 
   return (
-    <div className="flex-1 w-full" ref={constraintsRef}>
+    <div className={"w-full h-full z-10 relative grid"} ref={constraintsRef}>
+      {image}
       <motion.div
         style={{
-          display: "grid",
+          display: image && isBounding ? "grid" : "none",
+          position: "absolute",
+          zIndex: 1,
           gridTemplateColumns: "repeat(4, minmax(0, 1fr))",
           borderRadius: "0.375rem",
           borderStyle: "solid",
           borderWidth: 2,
           borderColor: "lightgray",
           cursor: "move",
-          margin: 20,
-          height: "14em",
-          width: "14em",
+          height: "5em",
+          width: "5em",
           touchAction: "none",
-          overflow: "hidden",
         }}
         drag
         dragTransition={{ power: 0.1, bounceDamping: 100 }} //counteracts all inertia
