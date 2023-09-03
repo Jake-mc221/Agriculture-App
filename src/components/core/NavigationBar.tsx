@@ -22,7 +22,7 @@ export default function NavigationBar() {
             intent="unstyled"
             component={Link}
             href="/capture"
-            className=" self-center flex justify-center items-center h-20 w-20 rounded-full shadow-md absolute bottom-24 bg-gradient-to-t from-primary to-green-400"
+            className=" self-center z-10 flex justify-center items-center h-20 w-20 rounded-full shadow-md absolute bottom-24 bg-gradient-to-t from-primary to-green-400"
           >
             <LuScanLine className="text-3xl text-gray-600" />
           </Button>

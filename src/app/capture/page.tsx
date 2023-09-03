@@ -2,25 +2,16 @@
 
 import { Button } from "@/components/common/Button";
 import { PageContainer } from "@/components/common/PageContainer";
-import { Radio } from "@/components/common/Radio";
-import { Select } from "@/components/common/Select";
 import { Camera, CameraResultType, Photo } from "@capacitor/camera";
 import { Capacitor } from "@capacitor/core";
 import { Filesystem, Directory } from "@capacitor/filesystem";
 import { useState, useEffect } from "react";
 import { TbPhoto } from "react-icons/tb";
-import { LuInspect } from "react-icons/lu";
 import Bounding from "@/components/common/Bounding";
+import { ComboBox } from "@/components/common/ComboBox";
 
 export default function Home() {
   const [image, setImage] = useState<Photo>();
-  const [isBounding, setIsBounding] = useState<boolean>(false);
-
-  {
-    /** Helpful function for saving the images */
-  }
-
-  useEffect(() => {}, [isBounding]); // updates isBounding prop in child elements when it changes
 
   const readAsBase64 = async (photo: Photo) => {
     // Fetching the photo, reading it as a blob and then converting it into base 64 format.
@@ -83,30 +74,20 @@ export default function Home() {
   };
   return (
     <PageContainer>
-      {/* Button for the bounding box */}
-      <Button intent="unstyled" onClick={() => setIsBounding(!isBounding)}>
-        <LuInspect
-          className={
-            "hover:bg-slate-100 md-rounded m-1 " + (!image ? "hidden" : "")
-          }
-        />
-      </Button>
       <div className="flex-grow flex flex-col gap-5">
         {image ? (
-          <Bounding
-            image={
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
-                style={{ marginLeft: "auto", marginRight: "auto" }}
-                className="z-0"
-                src={image.dataUrl}
-                width={300}
-                height={300}
-                alt="Captured image"
-              />
-            }
-            isBounding={isBounding}
-          />
+          <div className="flex-1 flex flex-col justify-end">
+            <Bounding
+              image={
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  className="object-contain w-auto h-auto"
+                  src={image.dataUrl}
+                  alt="Captured image"
+                />
+              }
+            />
+          </div>
         ) : (
           <div className="flex-grow bg-gray-200 rounded border border-black/20 flex items-center justify-center">
             <TbPhoto aria-hidden className="text-3xl" />
@@ -115,12 +96,12 @@ export default function Home() {
 
         <Button onClick={takePhoto}>Capture</Button>
 
-        <Radio
+        <ComboBox
           label="Crop Type"
           options={[{ name: "Crop 1" }, { name: "Crop 2" }, { name: "Crop 3" }]}
           getOptionName={(option) => option.name}
         />
-        <Radio
+        <ComboBox
           label="Soil Type"
           options={[{ name: "Soil 1" }, { name: "Soil 2" }, { name: "Soil 3" }]}
           getOptionName={(option) => option.name}
