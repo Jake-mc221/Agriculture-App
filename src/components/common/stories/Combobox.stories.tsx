@@ -1,21 +1,21 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { LabelCombobox } from "../Combobox";
+import { ComboBox } from "../ComboBox";
 
-const meta: Meta<typeof LabelCombobox> = {
-  component: LabelCombobox,
+const meta: Meta<typeof ComboBox> = {
+  component: ComboBox,
 };
 
 export default meta;
-type Story = StoryObj<typeof LabelCombobox>;
+type Story = StoryObj<typeof ComboBox>;
 
 const options = [
-  { id: 1, name: "Select an option" },
-  { id: 2, name: "Option 1" },
-  { id: 3, name: "Option 2" },
-  { id: 4, name: "Option 3" },
-  { id: 5, name: "Option 4" },
-  { id: 6, name: "Option 5" },
+  { name: "Select an option" },
+  { name: "Option 1" },
+  { name: "Option 2" },
+  { name: "Option 3" },
+  { name: "Option 4" },
+  { name: "Option 5" },
 ];
 
 /*
@@ -26,7 +26,7 @@ const options = [
 export const Primary: Story = {
   render: () => (
     <div className="h-full flex flex-col items-center justify-center gap-5">
-      <LabelCombobox labels={options} />
+      <ComboBox options={options} getOptionName={(option) => option.name} />
     </div>
   ),
 };

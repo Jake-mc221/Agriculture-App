@@ -32,7 +32,12 @@ const testOptions = [
 export const Primary: Story = {
   render: () => (
     <div className="h-full flex flex-col items-center justify-center gap-5">
-      <Radio options={testOptions} />
+      <Radio
+        label="Label"
+        options={testOptions}
+        getOptionName={(option) => option.name}
+        getOptionDescription={(option) => option.description}
+      />
     </div>
   ),
 };

@@ -11,15 +11,15 @@ type Story = StoryObj<typeof Tabs>;
 
 const options = [
   {
-    heading: "Tab 1",
+    name: "Tab 1",
     content: "Content 1",
   },
   {
-    heading: "Tab 2",
+    name: "Tab 2",
     content: "Content 2",
   },
   {
-    heading: "Tab 3",
+    name: "Tab 3",
     content: "Content 3",
   },
 ];
@@ -32,7 +32,7 @@ const options = [
 export const Primary: Story = {
   render: () => (
     <div className="h-full flex flex-col items-center justify-center gap-5">
-      <Tabs tabOptions={options} />
+      <Tabs options={options} />
     </div>
   ),
 };
