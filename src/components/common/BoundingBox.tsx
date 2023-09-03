@@ -1,13 +1,13 @@
 "use client";
 
-import React, { ReactNode, useEffect, useRef } from "react";
+import React, { ReactNode, useRef } from "react";
 import { motion } from "framer-motion";
 
 export type BoundingProps = {
   image: ReactNode;
 };
 
-export default function Bounding({ image }: BoundingProps) {
+export default function BoundingBox({ image }: BoundingProps) {
   const constraintsRef = useRef(null);
 
   return (

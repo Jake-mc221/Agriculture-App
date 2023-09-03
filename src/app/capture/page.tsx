@@ -7,7 +7,7 @@ import { Capacitor } from "@capacitor/core";
 import { Filesystem, Directory } from "@capacitor/filesystem";
 import { useState, useEffect } from "react";
 import { TbPhoto } from "react-icons/tb";
-import Bounding from "@/components/common/Bounding";
+import BoundingBox from "@/components/common/BoundingBox";
 import { ComboBox } from "@/components/common/ComboBox";
 
 export default function Home() {
@@ -74,10 +74,10 @@ export default function Home() {
   };
   return (
     <PageContainer>
-      <div className="flex-grow flex flex-col gap-5">
+      <div className="flex-grow flex flex-col justify-end gap-5">
         {image ? (
-          <div className="flex-1 flex flex-col justify-end">
-            <Bounding
+          <div className="flex flex-col justify-end border rounded-lg shadow-md overflow-hidden border-black/20 bg-gray-200">
+            <BoundingBox
               image={
                 // eslint-disable-next-line @next/next/no-img-element
                 <img
