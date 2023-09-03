@@ -66,7 +66,7 @@ export function ComboBox<T>({
           afterLeave={() => setQuery("")}
         >
           <Combobox.Options className="absolute mt-1 z-10 max-h-60 w-full overflow-auto rounded-md bg-white text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-            {availableOptions.length === 0 && query !== "" ? (
+            {availableOptions.length === 0 || query !== "" ? (
               <div className="relative cursor-default select-none py-2 px-4 text-gray-700">
                 Nothing found.
               </div>
