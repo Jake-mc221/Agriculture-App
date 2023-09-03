@@ -2,6 +2,8 @@ import { PropsWithChildren } from "react";
 
 export function PageContainer({ children }: PropsWithChildren) {
   return (
-    <div className="flex-1 flex flex-col py-10 mx-10 w-80">{children}</div>
+    <div className="flex-1 flex flex-col-reverse py-10 px-10 w-full sm:w-[30rem]">
+      <div>{children}</div>
+    </div>
   );
 }

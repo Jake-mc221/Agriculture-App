@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/common/Button";
 import { PageContainer } from "@/components/common/PageContainer";
+import { Radio } from "@/components/common/Radio";
 import { Select } from "@/components/common/Select";
 import { Camera, CameraResultType, Photo } from "@capacitor/camera";
 import { Capacitor } from "@capacitor/core";
@@ -114,17 +115,16 @@ export default function Home() {
 
         <Button onClick={takePhoto}>Capture</Button>
 
-        <Select label="Crop Type">
-          <option>Crop1</option>
-          <option>Crop2</option>
-          <option>Crop3</option>
-        </Select>
-
-        <Select label="Soil Type">
-          <option>Soil1</option>
-          <option>Soil2</option>
-          <option>Soil3</option>
-        </Select>
+        <Radio
+          label="Crop Type"
+          options={[{ name: "Crop 1" }, { name: "Crop 2" }, { name: "Crop 3" }]}
+          getOptionName={(option) => option.name}
+        />
+        <Radio
+          label="Soil Type"
+          options={[{ name: "Soil 1" }, { name: "Soil 2" }, { name: "Soil 3" }]}
+          getOptionName={(option) => option.name}
+        />
       </div>
     </PageContainer>
   );
