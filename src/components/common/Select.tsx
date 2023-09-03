@@ -5,7 +5,7 @@ import { BsChevronDown } from "react-icons/bs";
 import { forwardRef } from "react";
 
 const selectStyles = cva(
-  "border rounded p-2 bg-transparent text-black min-w-[10rem] border-black/20 relative flex items-center focus-within:bg-primary/20",
+  "border rounded p-2 bg-transparent shadow-lg text-black min-w-[10rem] border-black/20 relative flex items-center focus-within:bg-primary/20",
   {
     variants: {},
   },

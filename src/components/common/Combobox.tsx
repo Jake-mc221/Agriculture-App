@@ -1,6 +1,6 @@
 import { Fragment, useState } from "react";
 import { Combobox, Transition } from "@headlessui/react";
-import { CheckIcon, ChevronDownIcon } from "@heroicons/react/20/solid";
+import { BsCheck, BsChevronDown } from "react-icons/bs";
 
 export function LabelCombobox({ labels }) {
   const [selected, setSelected] = useState(labels[0]);
@@ -20,7 +20,7 @@ export function LabelCombobox({ labels }) {
     <div className="fixed top-16 w-72">
       <Combobox value={selected} onChange={setSelected}>
         <div className="relative mt-1">
-          <div className="relative w-full cursor-default overflow-hidden rounded-lg bg-white text-left shadow-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm">
+          <div className="border relative w-full cursor-default overflow-hidden rounded-lg bg-white text-left shadow-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm">
             <Combobox.Input
               className="w-full border-none py-2 pl-3 pr-10 text-sm leading-5 text-gray-900 focus:ring-0"
               displayValue={(label) => label.name}
@@ -28,7 +28,7 @@ export function LabelCombobox({ labels }) {
               style={{ outline: "none" }}
             />
             <Combobox.Button className="absolute inset-y-0 right-0 flex items-center pr-2">
-              <ChevronDownIcon
+              <BsChevronDown
                 className="h-5 w-5 text-gray-400"
                 aria-hidden="true"
               />
@@ -72,7 +72,7 @@ export function LabelCombobox({ labels }) {
                               active ? "bg-primary text-white" : "text-gray-900"
                             }`}
                           >
-                            <CheckIcon className="h-5 w-5" aria-hidden="true" />
+                            <BsCheck className="h-5 w-5" aria-hidden="true" />
                           </span>
                         ) : null}
                       </>
