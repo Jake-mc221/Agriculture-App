@@ -14,7 +14,7 @@ export default function Home() {
         {image ? (
           /* eslint-disable-next-line @next/next/no-img-element */
           <img
-            src={image.dataUrl}
+            src={image.webPath}
             width={200}
             height={200}
             alt="Captured image"

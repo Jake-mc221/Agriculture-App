@@ -94,7 +94,7 @@ export const usePhotoGallery = () => {
         await Camera.getPhoto({
           quality: 90,
           allowEditing: false,
-          resultType: CameraResultType.DataUrl,
+          resultType: CameraResultType.Uri,
         }),
       );
       if (image) {
