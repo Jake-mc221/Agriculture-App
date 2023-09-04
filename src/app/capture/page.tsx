@@ -2,20 +2,16 @@
 
 import { Button } from "@/components/common/Button";
 import { PageContainer } from "@/components/common/PageContainer";
-import { Radio } from "@/components/common/Radio";
-import { Select } from "@/components/common/Select";
 import { Camera, CameraResultType, Photo } from "@capacitor/camera";
 import { Capacitor } from "@capacitor/core";
 import { Filesystem, Directory } from "@capacitor/filesystem";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { TbPhoto } from "react-icons/tb";
+import BoundingBox from "@/components/common/BoundingBox";
+import { ComboBox } from "@/components/common/ComboBox";
 
 export default function Home() {
   const [image, setImage] = useState<Photo>();
-
-  {
-    /** Helpful funciton for saving the images */
-  }
 
   const readAsBase64 = async (photo: Photo) => {
     // Fetching the photo, reading it as a blob and then converting it into base 64 format.
@@ -45,7 +41,7 @@ export default function Home() {
     // conver the phtoto to a base64 format, required by the Filesystem API to save.
     const base64Data = await readAsBase64(photo);
 
-    // Wrtie the data into the data directory.
+    // Write the data into the data directory.
     const filename = Date.now() + ".jpeg";
     const savedfile = await Filesystem.writeFile({
       path: filename,
@@ -53,7 +49,7 @@ export default function Home() {
       directory: Directory.Data,
     });
 
-    // To view the immage, load it from the webpath since its already loaded into memory
+    // To view the image, load it from the webpath since its already loaded into memory
     return {
       filepath: filename,
       webviewPath: photo.webPath,
@@ -78,29 +74,34 @@ export default function Home() {
   };
   return (
     <PageContainer>
-      <div className="w-full flex-grow flex flex-col gap-5">
+      <div className="flex-grow flex flex-col justify-end gap-5">
         {image ? (
-          /* eslint-disable-next-line @next/next/no-img-element */
-          <img
-            src={image.dataUrl}
-            width={200}
-            height={200}
-            alt="Captured image"
-          />
+          <div className="flex flex-col justify-end border rounded-lg shadow-md overflow-hidden border-black/20 bg-gray-200">
+            <BoundingBox
+              image={
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  className="object-contain w-auto h-auto"
+                  src={image.dataUrl}
+                  alt="Captured image"
+                />
+              }
+            />
+          </div>
         ) : (
-          <div className="flex-1 bg-gray-200 rounded border border-black/20 flex items-center justify-center">
+          <div className="flex-grow bg-gray-200 rounded border border-black/20 flex items-center justify-center">
             <TbPhoto aria-hidden className="text-3xl" />
           </div>
         )}
 
         <Button onClick={takePhoto}>Capture</Button>
 
-        <Radio
+        <ComboBox
           label="Crop Type"
           options={[{ name: "Crop 1" }, { name: "Crop 2" }, { name: "Crop 3" }]}
           getOptionName={(option) => option.name}
         />
-        <Radio
+        <ComboBox
           label="Soil Type"
           options={[{ name: "Soil 1" }, { name: "Soil 2" }, { name: "Soil 3" }]}
           getOptionName={(option) => option.name}
