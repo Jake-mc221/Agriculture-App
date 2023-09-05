@@ -5,6 +5,8 @@ on:
     - cron: "58 13 * * *" # Run task everyday on 1358 UTC
   workflow_dispatch:
 
+permissions: read-all
+
 # Only allow one mirror job to run at a time, cancel old jobs
 concurrency:
   group: team2_mirror
