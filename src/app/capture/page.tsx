@@ -3,7 +3,7 @@
 import { Button } from "@/components/common/Button";
 import { PageContainer } from "@/components/common/PageContainer";
 import { Select } from "@/components/common/Select";
-import { usePhotoGallery } from "@/components/common/usePhotoGallery";
+import { usePhotoGallery } from "@/components/common/UsePhotoGallery";
 import { TbPhoto } from "react-icons/tb";
 
 export default function Home() {
@@ -24,20 +24,18 @@ export default function Home() {
             <TbPhoto aria-hidden className="text-3xl" />
           </div>
         )}
-
         <Button onClick={takePhoto}>Capture</Button>
-
         <Select label="Crop Type">
           <option>Crop1</option>
           <option>Crop2</option>
           <option>Crop3</option>
         </Select>
-
         <Select label="Soil Type">
           <option>Soil1</option>
           <option>Soil2</option>
           <option>Soil3</option>
         </Select>
+        <Button>Gal</Button>
       </div>
     </PageContainer>
   );

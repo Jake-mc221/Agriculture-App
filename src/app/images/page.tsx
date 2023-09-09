@@ -28,8 +28,6 @@ export default function Images() {
   };
   return (
     <div className="min-h-[25rem] w-full flex flex-col items-center gap-1 p-12 bg-white">
-
-      
       <div className="mb-8 text-center">
         <label className="text-3xl font-bold text-gray-700 w-36 text-center">
           Images
@@ -39,7 +37,6 @@ export default function Images() {
       <br />
 
       <div className="text-center flex flex-row space-x-18">
-      
         <button
           onClick={handleClickForBackButton}
           className="text-green-400 mr-4"
@@ -55,9 +52,9 @@ export default function Images() {
         </button>
       </div>
       <div>
-        <button 
-        onClick={openModal}
-        className="text-green-400 mr-4">Image_Sample</button>
+        <button onClick={openModal} className="text-green-400 mr-4">
+          Image_Sample
+        </button>
         {modalIsOpen && (
           <Modal
             isOpen={modalIsOpen}
@@ -70,19 +67,18 @@ export default function Images() {
             <p>SMS message</p>
             <p>Facebook</p>
             <p>Instagram</p>
-            <button onClick={closeModal}
-            className="text-green-400 mr-4">Close</button>
+            <button onClick={closeModal} className="text-green-400 mr-4">
+              Close
+            </button>
           </Modal>
         )}
-    </div>
+      </div>
       <div>
         <footer>
           <NavigationBar></NavigationBar>
         </footer>
       </div>
     </div>
-
-
   );
 
   function handleClickForBackButton() {
