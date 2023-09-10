@@ -8,6 +8,7 @@ import { MdAddChart } from "react-icons/md";
 import Link from "next/link";
 import { Button } from "../common/Button";
 import { SetStateAction, useState } from "react";
+import { takePhoto } from "@/logic/image_capture";
 
 export default function NavigationBar() {
   const [activeLink, setActiveLink] = useState("home"); // current active link is home
@@ -20,8 +21,8 @@ export default function NavigationBar() {
         <nav className="fixed left-0 bottom-0 flex flex-col w-full h-36 bg-slate-50">
           <Button
             intent="unstyled"
-            component={Link}
-            href="/capture"
+            link=
+            onClick={takePhoto}
             className=" self-center z-10 flex justify-center items-center h-20 w-20 rounded-full shadow-md absolute bottom-24 bg-gradient-to-t from-primary to-green-400"
           >
             <LuScanLine className="text-3xl text-gray-600" />
