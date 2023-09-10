@@ -9,6 +9,34 @@ import { useState, useEffect } from "react";
 import { TbPhoto } from "react-icons/tb";
 import BoundingBox from "@/components/common/BoundingBox";
 import { ComboBox } from "@/components/common/ComboBox";
+import PlantHealth from "./PlantHealth";
+import {TabOption, Tabs} from "@/components/common/Tabs";
+
+const tabOptions: TabOption[] = [
+  {
+    name: "Crop Type",
+    content: (<ComboBox
+      label="Crop Type"
+      options={[{ name: "Crop 1" }, { name: "Crop 2" }, { name: "Crop 3" }]}
+      getOptionName={(option) => option.name}
+    />)
+  },
+
+  {
+    name: "Soil Type",
+    content: (<ComboBox
+      label="Soil Type"
+      options={[{ name: "Soil 1" }, { name: "Soil 2" }, { name: "Soil 3" }]}
+      getOptionName={(option) => option.name}
+    />)
+  },
+
+  {
+    name: "Plant Health",
+    content: (<PlantHealth/>)
+  }
+];
+
 
 export default function Home() {
   const [image, setImage] = useState<Photo>();
@@ -96,16 +124,10 @@ export default function Home() {
 
         <Button onClick={takePhoto}>Capture</Button>
 
-        <ComboBox
-          label="Crop Type"
-          options={[{ name: "Crop 1" }, { name: "Crop 2" }, { name: "Crop 3" }]}
-          getOptionName={(option) => option.name}
-        />
-        <ComboBox
-          label="Soil Type"
-          options={[{ name: "Soil 1" }, { name: "Soil 2" }, { name: "Soil 3" }]}
-          getOptionName={(option) => option.name}
-        />
+        <form>  
+          <Tabs options={tabOptions}/>
+          <Button>Submit</Button>
+        </form>
       </div>
     </PageContainer>
   );
