@@ -6,6 +6,8 @@ import { Select } from "@/components/common/Select";
 import { Camera, CameraResultType, Photo } from "@capacitor/camera";
 import { useState } from "react";
 import { TbPhoto } from "react-icons/tb";
+import { MdInfo } from "react-icons/md";
+import Link from "next/link";
 
 export default function Home() {
   const [image, setImage] = useState<Photo>();
@@ -27,19 +29,24 @@ export default function Home() {
           </div>
         )}
 
-        <Button
-          onClick={async () => {
-            setImage(
-              await Camera.getPhoto({
-                quality: 90,
-                allowEditing: false,
-                resultType: CameraResultType.DataUrl,
-              }),
-            );
-          }}
-        >
-          Capture
-        </Button>
+        <div className="flex justify-between mx-12">
+          <Button
+            onClick={async () => {
+              setImage(
+                await Camera.getPhoto({
+                  quality: 90,
+                  allowEditing: false,
+                  resultType: CameraResultType.DataUrl,
+                }),
+              );
+            }}
+          >
+            Capture
+          </Button>
+          <Button intent="unstyled" component={Link} href="/guidelines">
+            <MdInfo className="text-primary w-10 h-10" />{" "}
+          </Button>
+        </div>
 
         <Select label="Crop Type">
           <option>Crop1</option>
