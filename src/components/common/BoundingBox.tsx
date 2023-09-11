@@ -38,34 +38,21 @@ export default function BoundingBox({ image }: BoundingProps) {
     const minimum_size = 50;
     if (width > minimum_size && height > minimum_size) {
       setDimensions({ x: width, y: height });
+      console.log("changed both");
     } else if (width > minimum_size) {
       setDimensions({ x: width, y: dimensions.y });
+      console.log("changed width only");
     } else if (height > minimum_size) {
       setDimensions({ x: dimensions.x, y: height });
+      console.log("changed height only");
     }
     // Set the new position of the box based on which corner you are coming from
-    /*if (corner === "bottom-left" || corner === "top-left") {
-      if (width > minimum_size) {
-        box.style.left =
-          box.getBoundingClientRect().left +
-          e.clientX -
-          mouseDim.x -
-          image.left +
-          "px";
-      }
-      console.log("left computed: " + box.getBoundingClientRect().left);
-    }
-    if (corner === "top-right" || corner === "top-left") {
-      if (height > minimum_size) {
-        box.style.top =
-          box.getBoundingClientRect().top +
-          e.clientY -
-          mouseDim.y -
-          image.top +
-          "px";
-      }
-      console.log("top computed: " + box.getBoundingClientRect().top);
-    }*/
+    box.style.transform =
+      "translate(calc(" +
+      (mouseDim.x + image.left) +
+      "px , calc(" +
+      (mouseDim.y + image.top) +
+      "px))";
 
     setMouseDim({ x: e.clientX, y: e.clientY });
   };
