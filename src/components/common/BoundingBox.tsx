@@ -154,7 +154,7 @@ export default function BoundingBox({ image }: BoundingProps) {
           style={{
             clipPath:
               "polygon(78% 78%, 78% 0, 100% 0, 100% 100%, 0 100%, 0 78%)",
-          }}
+          }}// I wanted to do it like this bc the alternative would be to add a  css file to get this kind of preciseness: https://stackoverflow.com/questions/68932695/how-to-add-a-clip-path-to-image-in-tailwind
         ></div>
       </motion.div>
     </div>
