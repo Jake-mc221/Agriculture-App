@@ -22,15 +22,14 @@ export default function BoundingBox({ image }: BoundingProps) {
     const box = document.getElementById("box");
     const width = dimensions.x + left * (e.clientX - mouseDim.x);
     const height = dimensions.y + top * (e.clientY - mouseDim.y);
-
     if (
       !isResizing ||
       image == null ||
-      box == null
-      //image.right < box.getBoundingClientRect().right + width ||
-      //image.left > box.getBoundingClientRect().left + width ||
-      //image.top > box.getBoundingClientRect().top + height ||
-      //image.bottom < box.getBoundingClientRect().bottom + height
+      box == null ||
+      image.left > e.clientX ||
+      image.right < e.clientX ||
+      image.top > e.clientY ||
+      image.bottom < e.clientY
     ) {
       return;
     }
@@ -38,13 +37,10 @@ export default function BoundingBox({ image }: BoundingProps) {
     const minimum_size = 50;
     if (width > minimum_size && height > minimum_size) {
       setDimensions({ x: width, y: height });
-      console.log("changed both");
     } else if (width > minimum_size) {
       setDimensions({ x: width, y: dimensions.y });
-      console.log("changed width only");
     } else if (height > minimum_size) {
       setDimensions({ x: dimensions.x, y: height });
-      console.log("changed height only");
     }
     // Set the new position of the box based on which corner you are coming from
     box.style.transform =
@@ -55,6 +51,44 @@ export default function BoundingBox({ image }: BoundingProps) {
       "px))";
 
     setMouseDim({ x: e.clientX, y: e.clientY });
+  };
+
+  const resizePhone = (e: React.TouchEvent<HTMLDivElement>) => {
+    const image = document.getElementById("image")?.getBoundingClientRect();
+    const box = document.getElementById("box");
+    const x = e.touches[0].clientX;
+    const y = e.touches[0].clientY;
+    const width = dimensions.x + (x - mouseDim.x);
+    const height = dimensions.y + (y - mouseDim.y);
+
+    if (
+      !isResizing ||
+      image == null ||
+      box == null ||
+      image.left > x ||
+      image.right < x ||
+      image.top > y ||
+      image.bottom < y
+    ) {
+      return;
+    }
+    // Set the new width and height of the box
+    const minimum_size = 50;
+    if (width > minimum_size && height > minimum_size) {
+      setDimensions({ x: width, y: height });
+    } else if (width > minimum_size) {
+      setDimensions({ x: width, y: dimensions.y });
+    } else if (height > minimum_size) {
+      setDimensions({ x: dimensions.x, y: height });
+    }
+    // Set the new position of the box based on which corner you are coming from
+    box.style.transform =
+      "translate(calc(" +
+      (mouseDim.x + image.left) +
+      "px , calc(" +
+      (mouseDim.y + image.top) +
+      "px))";
+    setMouseDim({ x: x, y: y });
   };
 
   return (
@@ -73,7 +107,7 @@ export default function BoundingBox({ image }: BoundingProps) {
         dragElastic={0}
         dragConstraints={constraintsRef}
       >
-        {/*This is a little ugly but I had to put in these divs to show the grid. If I used an image or smthg the scaling would get messed up */}
+        {/*This is a little ugly but I had to put in these divs to show the grid. If I used an image or smthg the scaling would get messed up during resizing */}
         <div className="grid grid-cols-4 h-full w-full">
           <div className="border rounded border-gray-500" />
           <div className="border rounded border-gray-500" />
@@ -98,45 +132,29 @@ export default function BoundingBox({ image }: BoundingProps) {
           onMouseUp={() => {
             setIsResizing(false);
           }}
-          onDrag={(e) => resize(e, "top-left", -1, -1)}
-          onMouseDown={() => {
-            setIsResizing(true);
-          }}
-          className="cursor-nwse-resize bg-white rounded-full h-2 w-2 absolute top-[-3px] left-[-3px]"
-        ></div>
-        <div
-          draggable
-          onMouseUp={() => {
-            setIsResizing(false);
-          }}
-          onDrag={(e) => resize(e, "top-right", 1, -1)}
-          onMouseDown={() => {
-            setIsResizing(true);
-          }}
-          className="cursor-nesw-resize bg-white rounded-full h-2 w-2 absolute top-[-3px] right-[-3px]"
-        ></div>
-        <div
-          draggable
-          onMouseUp={() => {
-            setIsResizing(false);
-          }}
-          onDrag={(e) => resize(e, "bottom-left", -1, 1)}
-          onMouseDown={() => {
-            setIsResizing(true);
-          }}
-          className="cursor-nesw-resize bg-white rounded-full h-2 w-2 absolute bottom-[-3px] left-[-3px]"
-        ></div>
-        <div
-          draggable
-          onMouseUp={() => {
-            setIsResizing(false);
-          }}
           onDrag={(e) => resize(e, "bottom-right", 1, 1)}
           onMouseDown={(e) => {
             setIsResizing(true);
             setMouseDim({ x: e.pageX, y: e.pageY });
           }}
-          className="cursor-nwse-resize bg-white rounded-full h-2 w-2 absolute bottom-[-3px] right-[-3px]"
+          // Phone functions
+          onTouchStart={(e) => {
+            console.log("touch");
+            setIsResizing(true);
+            setMouseDim({
+              x: e.touches[0].clientX,
+              y: e.touches[0].clientY,
+            });
+          }}
+          onTouchMove={(e) => resizePhone(e)}
+          onTouchEnd={() => {
+            setIsResizing(false);
+          }}
+          className="cursor-nwse-resize bg-gray-200 rounded h-5 w-5 absolute bottom-[-5px] right-[-5px]"
+          style={{
+            clipPath:
+              "polygon(78% 78%, 78% 0, 100% 0, 100% 100%, 0 100%, 0 78%)",
+          }}
         ></div>
       </motion.div>
     </div>
