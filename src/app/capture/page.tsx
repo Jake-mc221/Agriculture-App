@@ -7,7 +7,7 @@ import { Capacitor } from "@capacitor/core";
 import { Filesystem, Directory } from "@capacitor/filesystem";
 import { useState } from "react";
 import { TbPhoto } from "react-icons/tb";
-import BoundingBox from "@/components/common/BoundingBox";
+import BoundingBox from "@/components/BoundingBox/BoundingBox";
 import { ComboBox } from "@/components/common/ComboBox";
 
 export default function Home() {
