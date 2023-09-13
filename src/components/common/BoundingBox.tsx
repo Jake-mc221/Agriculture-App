@@ -2,6 +2,7 @@
 
 import React, { ReactNode, useRef, useState } from "react";
 import { motion } from "framer-motion";
+import { Resizer } from "./Resizer";
 
 export type BoundingProps = {
   image: ReactNode;
@@ -9,46 +10,7 @@ export type BoundingProps = {
 
 export default function BoundingBox({ image }: BoundingProps) {
   const constraintsRef = useRef(null); // records the constraints of the bounding box. This is assigned to be this element
-  const [isResizing, setIsResizing] = useState(false); // records whether the bounding box is being resized or not
   const [dimensions, setDimensions] = useState({ x: 50, y: 50 }); // records the current width and height of the bounding box
-  const [mouseDim, setMouseDim] = useState({ x: 0, y: 0 }); // records the most recent click positions of the mouse before dragging
-
-  const resize = (x: number, y: number) => {
-    const image = document.getElementById("image")?.getBoundingClientRect();
-    const box = document.getElementById("box");
-    const width = dimensions.x + (x - mouseDim.x);
-    const height = dimensions.y + (y - mouseDim.y);
-
-    if (
-      !isResizing ||
-      image == null ||
-      box == null ||
-      image.left > x ||
-      image.right < x ||
-      image.top > y ||
-      image.bottom < y
-    ) {
-      return;
-    }
-    // Set the new width and height of the box
-    const minimum_size = 50;
-    if (width > minimum_size && height > minimum_size) {
-      setDimensions({ x: width, y: height });
-    } else if (width > minimum_size) {
-      setDimensions({ x: width, y: dimensions.y });
-    } else if (height > minimum_size) {
-      setDimensions({ x: dimensions.x, y: height });
-    }
-    // Set the new position of the box based on which corner you are coming from
-    box.style.transform =
-      "translate(calc(" +
-      (mouseDim.x + image.left) +
-      "px , calc(" +
-      (mouseDim.y + image.top) +
-      "px))";
-
-    setMouseDim({ x: x, y: y });
-  };
 
   return (
     <div
@@ -86,38 +48,44 @@ export default function BoundingBox({ image }: BoundingProps) {
           <div className="border rounded opacity-5 border-gray-500" />
         </div>
 
-        <div
-          draggable
-          onMouseUp={() => {
-            setIsResizing(false);
-          }}
-          onDrag={(e) => resize(e.clientX, e.clientY)}
-          onMouseDown={(e) => {
-            setIsResizing(true);
-            setMouseDim({ x: e.pageX, y: e.pageY });
-          }}
-          // Phone functions
-          onTouchStart={(e) => {
-            console.log("touch");
-            setIsResizing(true);
-            setMouseDim({
-              x: e.touches[0].clientX,
-              y: e.touches[0].clientY,
-            });
-          }}
-          onTouchMove={(e) =>
-            resize(e.touches[0].clientX, e.touches[0].clientY)
-          }
-          onTouchEnd={() => {
-            setIsResizing(false);
-          }}
-          className="cursor-nwse-resize bg-gray-200 rounded h-5 w-5 absolute bottom-[-5px] right-[-5px]"
-          style={{
-            clipPath:
-              "polygon(78% 78%, 78% 0, 100% 0, 100% 100%, 0 100%, 0 78%)",
-          }} // I wanted to do it like this bc the alternative would be to add a css file to get this kind of preciseness: https://stackoverflow.com/questions/68932695/how-to-add-a-clip-path-to-image-in-tailwind
-        ></div>
+        <Resizer
+          left={1}
+          top={1}
+          shape={"polygon(78% 78%, 78% 0, 100% 0, 100% 100%, 0 100%, 0 78%)"}
+          dimensions={dimensions}
+          setDimensions={setDimensions}
+          position="bottom-[-5px] right-[-5px] cursor-nwse-resize "
+        />
+        <Resizer
+          left={1}
+          top={-1}
+          shape={"polygon(0 22%, 0 0, 100% 0, 100% 100%, 78% 100%, 78% 22%)"}
+          dimensions={dimensions}
+          setDimensions={setDimensions}
+          position="top-[-5px] right-[-5px] cursor-nesw-resize "
+        />
+        <Resizer
+          left={-1}
+          top={1}
+          shape={"polygon(0 0, 22% 0, 22% 78%, 100% 78%, 100% 100%, 0 100%)"}
+          dimensions={dimensions}
+          setDimensions={setDimensions}
+          position="bottom-[-5px] left-[-5px] cursor-nesw-resize "
+        />
+        <Resizer
+          left={-1}
+          top={-1}
+          shape={"polygon(0 100%, 0 0, 100% 0, 100% 22%, 22% 22%, 22% 100%)"}
+          dimensions={dimensions}
+          setDimensions={setDimensions}
+          position="top-[-5px] left-[-5px] cursor-nwse-resize "
+        />
       </motion.div>
     </div>
   );
 }
+
+// Right-bottom: polygon(78% 78%, 78% 0, 100% 0, 100% 100%, 0 100%, 0 78%)
+// left-bottom: polygon(0 0, 22% 0, 22% 78%, 100% 78%, 100% 100%, 0 100%)
+// right-top: polygon(0 22%, 0 0, 100% 0, 100% 100%, 78% 100%, 78% 22%)
+// left-top: polygon(0 100%, 0 0, 100% 0, 100% 22%, 22% 78%, 22% 100%)
