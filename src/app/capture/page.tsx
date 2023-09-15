@@ -5,11 +5,11 @@ import { PageContainer } from "@/components/common/PageContainer";
 import { Camera, CameraResultType, Photo } from "@capacitor/camera";
 import { Capacitor } from "@capacitor/core";
 import { Filesystem, Directory } from "@capacitor/filesystem";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { TbPhoto } from "react-icons/tb";
 import { MdInfo } from "react-icons/md";
 import Link from "next/link";
-import BoundingBox from "@/components/common/BoundingBox";
+import BoundingBox from "@/components/common/BoundingBox/BoundingBox";
 import { ComboBox } from "@/components/common/ComboBox";
 
 export default function Home() {
@@ -78,12 +78,12 @@ export default function Home() {
     <PageContainer>
       <div className="flex-grow flex flex-col justify-end gap-5">
         {image ? (
-          <div className="flex flex-col justify-end border rounded-lg shadow-md overflow-hidden border-black/20 bg-gray-200">
+          <div className="border rounded-lg shadow-md border-black/20 bg-gray-200">
             <BoundingBox
               image={
                 // eslint-disable-next-line @next/next/no-img-element
                 <img
-                  className="object-contain w-auto h-auto"
+                  className="w-auto h-auto"
                   src={image.dataUrl}
                   alt="Captured image"
                 />

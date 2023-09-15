@@ -19,8 +19,6 @@ export function ComboBox<T>({
     typeof options !== "function" ? options : [],
   );
 
-  console.log(availableOptions);
-
   useEffect(() => {
     (async () => {
       setAvailableOptions(
