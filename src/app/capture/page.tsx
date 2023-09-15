@@ -7,7 +7,9 @@ import { Capacitor } from "@capacitor/core";
 import { Filesystem, Directory } from "@capacitor/filesystem";
 import { useState } from "react";
 import { TbPhoto } from "react-icons/tb";
-import BoundingBox from "@/components/BoundingBox/BoundingBox";
+import { MdInfo } from "react-icons/md";
+import Link from "next/link";
+import BoundingBox from "@/components/common/BoundingBox/BoundingBox";
 import { ComboBox } from "@/components/common/ComboBox";
 
 export default function Home() {
@@ -94,7 +96,13 @@ export default function Home() {
           </div>
         )}
 
-        <Button onClick={takePhoto}>Capture</Button>
+        <div className="flex justify-between mx-20">
+          <Button onClick={takePhoto}>Capture</Button>
+
+          <Button intent="unstyled" component={Link} href="/guidelines">
+            <MdInfo className="text-primary w-10 h-10" />{" "}
+          </Button>
+        </div>
 
         <ComboBox
           label="Crop Type"
