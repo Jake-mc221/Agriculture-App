@@ -3,9 +3,9 @@
 import { Button } from "@/components/common/Button";
 import { PageContainer } from "@/components/common/PageContainer";
 import { Select } from "@/components/common/Select";
-import { usePhotoGallery } from "@/components/common/UsePhotoGallery";
+import { usePhotoGallery } from "@/components/common/usePhotoGallery";
 import { TbPhoto } from "react-icons/tb";
-
+import Link from "next/link";
 export default function Home() {
   const { image, takePhoto } = usePhotoGallery();
   return (
@@ -35,7 +35,9 @@ export default function Home() {
           <option>Soil2</option>
           <option>Soil3</option>
         </Select>
-        <Button>Gal</Button>
+        <Button component={Link} href="/label">
+          gallery
+        </Button>
       </div>
     </PageContainer>
   );

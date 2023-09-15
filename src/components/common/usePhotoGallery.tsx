@@ -2,19 +2,19 @@ import { Camera, CameraResultType, Photo } from "@capacitor/camera";
 import { Capacitor } from "@capacitor/core";
 import { Filesystem, Directory } from "@capacitor/filesystem";
 import { useEffect, useState } from "react";
-import { Image } from "./Image";
+import { ourImage } from "./ourImage";
 import { Preferences } from "@capacitor/preferences";
 
 const PHOTOS_PREF_KEY = "photos";
 
 export const usePhotoGallery = () => {
   const [image, setImage] = useState<Photo>();
-  const [images, setImages] = useState<Image[]>([]);
+  const [images, setImages] = useState<ourImage[]>([]);
 
   useEffect(() => {
     const loadSaved = async () => {
       const { value } = await Preferences.get({ key: PHOTOS_PREF_KEY });
-      const photosInPrefs: Image[] = value ? JSON.parse(value) : [];
+      const photosInPrefs: ourImage[] = value ? JSON.parse(value) : [];
 
       if (Capacitor.isNativePlatform()) {
         for (const photo of photosInPrefs) {
