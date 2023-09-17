@@ -8,13 +8,17 @@ import { MdAddChart } from "react-icons/md";
 import Link from "next/link";
 import { Button } from "../common/Button";
 import { SetStateAction, useState } from "react";
-import { takePhoto } from "@/logic/image_capture";
+import { useContext } from "react";
+import { PhotoContext } from "@/app/context";
 
 export default function NavigationBar() {
   const [activeLink, setActiveLink] = useState("home"); // current active link is home
   const changeActive = (link: SetStateAction<string>) => {
     setActiveLink(link);
   };
+
+  const {takePhoto} = useContext(PhotoContext);
+
   return (
     <>
       <div className="h-18 w-full">
@@ -22,6 +26,10 @@ export default function NavigationBar() {
           <Button
             intent="unstyled"
             component={Link}
+            onClick={async () => 
+              {await takePhoto();
+              window.location.href = "/capture";
+            }}
             href="/capture"
             className=" self-center z-10 flex justify-center items-center h-16 w-16 rounded-full shadow-md absolute bottom-12 bg-gradient-to-t from-primary to-green-400"
           >
