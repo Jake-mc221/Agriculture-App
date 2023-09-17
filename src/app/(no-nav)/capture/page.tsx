@@ -37,11 +37,11 @@ export default function Home() {
 
   return (
     <div className="relative flex flex-col h-full gap-10">
-      <div className="flex w-full justify-center items-center h-full bg-gray-200 rounded border border-black/20">
-        <TbPhoto aria-hidden className="grow-0 text-3xl" />
+      <div className="flex w-full justify-center items-center h-full bg-black rounded border border-black/20">
+        <TbPhoto aria-hidden className="invert bg-white text-6xl" />
       </div>
 
-      <form className="fixed bottom-0 pb-2 px-2 bg-white w-full flex flex-col items-center gap-5">  
+      <form className="fixed bottom-2 rounded-2xl  py-2 px-2 bg-slate-100 w-full flex flex-col items-center gap-5">  
         <Tabs options={tabOptions}/>
 
       </form>

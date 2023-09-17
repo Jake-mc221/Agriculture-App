@@ -11,7 +11,7 @@ export function Tabs({ options }: { options: TabOption[] }) {
   return (
     <div className="w-full max-w-md sm:px-0 z-50">
       <Tab.Group>
-        <Tab.List className="flex space-x-1 rounded-3xl bg-white p-1">
+        <Tab.List className="flex space-x-1 rounded-2xl bg-white p-1">
           {options.map((option) => {
             console.log(option);
             return (
@@ -37,11 +37,11 @@ export function Tabs({ options }: { options: TabOption[] }) {
             <Tab.Panel
               key={idx}
               className={twMerge(
-                "rounded-xl border shadow-lg",
-                "bg-white ring-white ring-opacity-60 ring-offset-2 ring-offset-primary focus:outline-none focus:ring-2",
+                "rounded-xl shadow-xl",
+                "bg-white ring-opacity-60 ring-offset-2 ring-offset-primary focus:outline-none focus:ring-2",
               )}
             >
-              <div className="rounded-xl p-3 ring-white ring-opacity-60 ring-offset-2 ring-offset-primary focus:outline-none focus:ring-2">
+              <div className="rounded-xl p-3 ring-opacity-60 ring-offset-2 focus:outline-none focus:ring-2">
                 {option.content}
               </div>
             </Tab.Panel>
