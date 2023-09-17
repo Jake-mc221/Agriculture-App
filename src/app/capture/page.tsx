@@ -35,7 +35,7 @@ export default function Home() {
           <option>Soil2</option>
           <option>Soil3</option>
         </Select>
-        <Button component={Link} href="/label">
+        <Button intent="primary" component={Link} href="/gallery">
           gallery
         </Button>
       </div>

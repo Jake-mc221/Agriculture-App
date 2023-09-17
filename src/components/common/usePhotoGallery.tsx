@@ -23,6 +23,7 @@ export const usePhotoGallery = () => {
             directory: Directory.Data,
           });
           photo.webviewPath = "data:image/jpeg:base64,${file.data}";
+          console.log(photo.webviewPath);
         }
       }
       setImages(photosInPrefs);
@@ -90,18 +91,15 @@ export const usePhotoGallery = () => {
 
   const takePhoto = async () => {
     try {
-      setImage(
-        await Camera.getPhoto({
-          quality: 90,
-          allowEditing: false,
-          resultType: CameraResultType.Uri,
-        }),
-      );
-      if (image) {
-        const newSavedImage = await savePhoto(image);
-        setImages([...images, newSavedImage]);
-        console.log("~file: user :", image);
-      }
+      const photo = await Camera.getPhoto({
+        quality: 90,
+        allowEditing: false,
+        resultType: CameraResultType.Uri,
+      });
+      const newSavedImage = await savePhoto(photo);
+      setImage(photo);
+      setImages([...images, newSavedImage]);
+      console.log("~file: user :", image);
     } catch (e) {
       return;
     }
