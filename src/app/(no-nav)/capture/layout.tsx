@@ -1,5 +1,5 @@
 import NavigationBar from "@/components/core/NavigationBar";
-import "./globals.css";
+import "@/app/globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { CapacitorPwaLoader } from "@/components/utility/CapacitorPwaLoader";
@@ -29,9 +29,6 @@ export default function RootLayout({
           {children}
           <CapacitorPwaLoader />
         </main>
-        <footer>
-          <NavigationBar />
-        </footer>
       </body>
     </html>
   );

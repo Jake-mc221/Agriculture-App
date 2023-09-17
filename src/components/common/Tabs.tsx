@@ -19,7 +19,7 @@ export function Tabs({ options }: { options: TabOption[] }) {
                 key={option.name}
                 className={({ selected }) =>
                   twMerge(
-                    "w-full rounded-3xl py-2.5 text-sm font-medium leading-5",
+                    "w-full rounded-2xl py-2.5 text-sm font-medium leading-5",
                     "ring-white ring-opacity-60 ring-offset-2 ring-offset-primary focus:outline-none focus:ring-2",
                     selected
                       ? "text-primary bg-white shadow"

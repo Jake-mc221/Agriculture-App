@@ -41,9 +41,9 @@ export default function Home() {
         <TbPhoto aria-hidden className="grow-0 text-3xl" />
       </div>
 
-      <form className="fixed bottom-0 w-full flex flex-col items-center gap-5">  
+      <form className="fixed bottom-0 pb-2 px-2 bg-white w-full flex flex-col items-center gap-5">  
         <Tabs options={tabOptions}/>
-        <Button className="">Submit</Button>
+
       </form>
 
         
