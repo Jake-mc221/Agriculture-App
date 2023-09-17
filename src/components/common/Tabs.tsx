@@ -9,7 +9,7 @@ export type TabOption = {
 
 export function Tabs({ options }: { options: TabOption[] }) {
   return (
-    <div className="w-full max-w-md px-2 py-16 sm:px-0">
+    <div className="w-full max-w-md sm:px-0">
       <Tab.Group>
         <Tab.List className="flex space-x-1 rounded-3xl bg-gray-500/20 p-1">
           {options.map((option) => {

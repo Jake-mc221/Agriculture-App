@@ -16,13 +16,13 @@ export default function NavigationBar() {
   };
   return (
     <>
-      <div className="h-36 w-full">
-        <nav className="fixed left-0 bottom-0 flex flex-col w-full h-36 bg-slate-50">
+      <div className="h-18 w-full">
+        <nav className="fixed left-0 bottom-0 flex flex-col w-full h-20 bg-slate-50">
           <Button
             intent="unstyled"
             component={Link}
             href="/capture"
-            className=" self-center z-10 flex justify-center items-center h-20 w-20 rounded-full shadow-md absolute bottom-24 bg-gradient-to-t from-primary to-green-400"
+            className=" self-center z-10 flex justify-center items-center h-16 w-16 rounded-full shadow-md absolute bottom-12 bg-gradient-to-t from-primary to-green-400"
           >
             <LuScanLine className="text-3xl text-gray-600" />
           </Button>

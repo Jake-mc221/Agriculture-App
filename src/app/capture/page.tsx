@@ -11,6 +11,7 @@ import BoundingBox from "@/components/common/BoundingBox";
 import { ComboBox } from "@/components/common/ComboBox";
 import PlantHealth from "./PlantHealth";
 import {TabOption, Tabs} from "@/components/common/Tabs";
+import { Resizable } from "re-resizable";
 
 const tabOptions: TabOption[] = [
   {
@@ -101,10 +102,10 @@ export default function Home() {
     }
   };
   return (
-    <PageContainer>
-      <div className="flex-grow flex flex-col justify-end gap-5">
+    <div className="flex flex-col gap-10">
+      <div className="flex flex-col items-center h-full gap-5 ">
         {image ? (
-          <div className="flex flex-col justify-end border rounded-lg shadow-md overflow-hidden border-black/20 bg-gray-200">
+          <div className="border rounded-lg shadow-md overflow-hidden border-black/20 bg-gray-200">
             <BoundingBox
               image={
                 // eslint-disable-next-line @next/next/no-img-element
@@ -114,21 +115,25 @@ export default function Home() {
                   alt="Captured image"
                 />
               }
+
             />
           </div>
         ) : (
-          <div className="flex-grow bg-gray-200 rounded border border-black/20 flex items-center justify-center">
-            <TbPhoto aria-hidden className="text-3xl" />
+          <div className="flex w-full justify-center items-center h-1/3 bg-gray-200 rounded border border-black/20">
+            <TbPhoto aria-hidden className="grow-0 text-3xl" />
           </div>
         )}
 
-        <Button onClick={takePhoto}>Capture</Button>
-
-        <form>  
-          <Tabs options={tabOptions}/>
-          <Button>Submit</Button>
-        </form>
+        <Button className="w-1/2" onClick={takePhoto}>Capture</Button>
       </div>
-    </PageContainer>
+        
+
+        <form className="w-full flex flex-col items-center gap-5">  
+          <Tabs options={tabOptions}/>
+          <Button className="">Submit</Button>
+        </form>
+
+        
+    </div>
   );
 }
