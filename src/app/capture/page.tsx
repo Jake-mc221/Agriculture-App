@@ -20,7 +20,7 @@ export default function Home() {
                 // eslint-disable-next-line @next/next/no-img-element
                 <img
                   className="w-auto h-auto"
-                  src={image.dataUrl}
+                  src={image.webPath}
                   alt="Captured image"
                 />
               }
@@ -50,6 +50,9 @@ export default function Home() {
           options={[{ name: "Soil 1" }, { name: "Soil 2" }, { name: "Soil 3" }]}
           getOptionName={(option) => option.name}
         />
+        <Button intent="secondary" component={Link} href="/gallery">
+          Queue
+        </Button>
       </div>
     </PageContainer>
   );
