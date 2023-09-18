@@ -1,8 +1,10 @@
 "use client";
 import { ComponentPropsWithoutRef, useRef, useState } from "react";
+import { twMerge } from "tailwind-merge";
 
 export function Resizer({
   moveCallback,
+  className,
   ...divProps
 }: {
   moveCallback: (dx: number, dy: number) => void;
@@ -13,6 +15,7 @@ export function Resizer({
   return (
     <div
       {...divProps}
+      className={twMerge(className, "touch-pinch-zoom")}
       ref={resizerRef}
       onPointerDown={(e) => {
         e.stopPropagation();

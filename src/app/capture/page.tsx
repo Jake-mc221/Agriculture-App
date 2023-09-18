@@ -14,15 +14,11 @@ export default function Home() {
     <PageContainer>
       <div className="flex-grow flex flex-col justify-end gap-5">
         {image ? (
-          <div className="border rounded-lg shadow-md border-black/20 bg-gray-200">
+          <div className="border rounded-lg shadow-md border-black/20 bg-gray-200 p-`">
             <BoundingBox
               image={
                 // eslint-disable-next-line @next/next/no-img-element
-                <img
-                  className="w-auto h-auto"
-                  src={image.webPath}
-                  alt="Captured image"
-                />
+                <img src={image.webPath} alt="Captured image" />
               }
             />
           </div>

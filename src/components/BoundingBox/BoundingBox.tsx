@@ -33,21 +33,45 @@ export default function BoundingBox({ image }: BoundingProps) {
     lengthY: Infinity,
   });
   const [boxCoords, _setBoxCoords] = useState<BoxCoords>({
-    positionX: 50,
-    positionY: 50,
-    lengthX: 50,
-    lengthY: 50,
+    positionX: 0.25,
+    positionY: 0.25,
+    lengthX: 0.5,
+    lengthY: 0.5,
   });
 
-  const boundaryResize = (entries: ResizeObserverEntry[]) => {
-    console.log(entries[0].contentRect);
-    setBoundarySize({
-      positionX: entries[0].contentRect.x,
-      positionY: entries[0].contentRect.y,
-      lengthX: entries[0].contentRect.width,
-      lengthY: entries[0].contentRect.height,
+  // This is a wrapper function which ensures that changing the box size and position
+  // will always be within the boundaries.
+  const setBoxCoords = useCallback((mutate: (old: BoxCoords) => BoxCoords) => {
+    _setBoxCoords((old: BoxCoords) => {
+      const newCoords = mutate(old);
+      newCoords.lengthX = Math.max(0, Math.min(newCoords.lengthX, 1));
+      newCoords.lengthY = Math.max(0, Math.min(newCoords.lengthY, 1));
+      newCoords.positionX = Math.max(
+        0,
+        Math.min(newCoords.positionX, 1 - newCoords.lengthX),
+      );
+      newCoords.positionY = Math.max(
+        0,
+        Math.min(newCoords.positionY, 1 - newCoords.lengthY),
+      );
+      return newCoords;
     });
-  };
+  }, []);
+
+  const boundaryResize = useCallback(
+    (entries: ResizeObserverEntry[]) => {
+      console.log(entries[0].contentRect);
+      setBoundarySize({
+        positionX: entries[0].contentRect.x,
+        positionY: entries[0].contentRect.y,
+        lengthX: entries[0].contentRect.width,
+        lengthY: entries[0].contentRect.height,
+      });
+
+      setBoxCoords((old) => old);
+    },
+    [setBoxCoords],
+  );
 
   // Subscribe to the resize event on the div.
   useEffect(() => {
@@ -57,41 +81,7 @@ export default function BoundingBox({ image }: BoundingProps) {
     return () => {
       resizeObserver.disconnect();
     };
-  }, [boundaryRef]);
-
-  // This is a wrapper function which ensures that changing the box size and position
-  // will always be within the boundaries.
-  const setBoxCoords = useCallback(
-    (mutate: (old: BoxCoords) => BoxCoords) => {
-      _setBoxCoords((old: BoxCoords) => {
-        const newCoords = mutate(old);
-        newCoords.lengthX = Math.max(
-          0,
-          Math.min(newCoords.lengthX, boundarySize.lengthX),
-        );
-        newCoords.lengthY = Math.max(
-          0,
-          Math.min(newCoords.lengthY, boundarySize.lengthY),
-        );
-        newCoords.positionX = Math.max(
-          0,
-          Math.min(
-            newCoords.positionX,
-            boundarySize.lengthX - newCoords.lengthX,
-          ),
-        );
-        newCoords.positionY = Math.max(
-          0,
-          Math.min(
-            newCoords.positionY,
-            boundarySize.lengthY - newCoords.lengthY,
-          ),
-        );
-        return newCoords;
-      });
-    },
-    [boundarySize],
-  );
+  }, [boundaryRef, boundaryResize]);
 
   return (
     <div
@@ -104,7 +94,9 @@ export default function BoundingBox({ image }: BoundingProps) {
       {image}
       <div
         ref={boxRef}
-        className={"absolute self-center cursor-move border border-black"}
+        className={
+          "absolute self-center cursor-move border border-black touch-pinch-zoom"
+        }
         onPointerDown={(e) => {
           boxRef.current?.setPointerCapture(e.pointerId);
           setDragging(true);
@@ -114,8 +106,8 @@ export default function BoundingBox({ image }: BoundingProps) {
             setBoxCoords((old) => {
               return {
                 ...old,
-                positionX: old.positionX + e.movementX,
-                positionY: old.positionY + e.movementY,
+                positionX: old.positionX + e.movementX / boundarySize.lengthX,
+                positionY: old.positionY + e.movementY / boundarySize.lengthY,
               };
             });
           }
@@ -124,10 +116,14 @@ export default function BoundingBox({ image }: BoundingProps) {
           setDragging(false);
         }}
         style={{
-          left: `${boxCoords.positionX + boundarySize.positionX}px`,
-          top: `${boxCoords.positionY + boundarySize.positionY}px`,
-          width: `${boxCoords.lengthX}px`,
-          height: `${boxCoords.lengthY}px`,
+          left: `${
+            boxCoords.positionX * boundarySize.lengthX + boundarySize.positionX
+          }px`,
+          top: `${
+            boxCoords.positionY * boundarySize.lengthY + boundarySize.positionY
+          }px`,
+          width: `${boxCoords.lengthX * boundarySize.lengthX}px`,
+          height: `${boxCoords.lengthY * boundarySize.lengthY}px`,
         }}
       >
         <Resizer
@@ -135,10 +131,10 @@ export default function BoundingBox({ image }: BoundingProps) {
           moveCallback={(dx, dy) => {
             setBoxCoords((old) => {
               return {
-                positionX: old.positionX + dx,
-                positionY: old.positionY + dy,
-                lengthX: old.lengthX - dx,
-                lengthY: old.lengthY - dy,
+                positionX: old.positionX + dx / boundarySize.lengthX,
+                positionY: old.positionY + dy / boundarySize.lengthY,
+                lengthX: old.lengthX - dx / boundarySize.lengthX,
+                lengthY: old.lengthY - dy / boundarySize.lengthY,
               };
             });
           }}
@@ -148,10 +144,10 @@ export default function BoundingBox({ image }: BoundingProps) {
           moveCallback={(dx, dy) => {
             setBoxCoords((old) => {
               return {
-                positionX: old.positionX + dx,
+                positionX: old.positionX + dx / boundarySize.lengthX,
                 positionY: old.positionY,
-                lengthX: old.lengthX - dx,
-                lengthY: old.lengthY + dy,
+                lengthX: old.lengthX - dx / boundarySize.lengthX,
+                lengthY: old.lengthY + dy / boundarySize.lengthY,
               };
             });
           }}
@@ -162,9 +158,9 @@ export default function BoundingBox({ image }: BoundingProps) {
             setBoxCoords((old) => {
               return {
                 positionX: old.positionX,
-                positionY: old.positionY + dy,
-                lengthX: old.lengthX + dx,
-                lengthY: old.lengthY - dy,
+                positionY: old.positionY + dy / boundarySize.lengthY,
+                lengthX: old.lengthX + dx / boundarySize.lengthX,
+                lengthY: old.lengthY - dy / boundarySize.lengthY,
               };
             });
           }}
@@ -176,8 +172,8 @@ export default function BoundingBox({ image }: BoundingProps) {
               return {
                 positionX: old.positionX,
                 positionY: old.positionY,
-                lengthX: old.lengthX + dx,
-                lengthY: old.lengthY + dy,
+                lengthX: old.lengthX + dx / boundarySize.lengthX,
+                lengthY: old.lengthY + dy / boundarySize.lengthY,
               };
             });
           }}
