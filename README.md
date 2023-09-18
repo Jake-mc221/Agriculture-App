@@ -33,8 +33,8 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 
 The NextJS config file is already set up to build a static export, so you can just run `npm run build`, the final product will be put into the `out` directory.
 
-To synchronise the built static web app and the native apps, run `npx cap sync`.
-
-To synchronise the capacitor project settings, run `npx cap copy`.
+To synchronise the built static web app, capacitor project settings, and the native apps, run `npx cap sync`.
 
 To run the Android or iOS projects, run `npx cap open android` or `npx cap open ios` respectively.
+
+You may also wish to see our storybook components. Please run `npm run storybook` to display them on your browser.

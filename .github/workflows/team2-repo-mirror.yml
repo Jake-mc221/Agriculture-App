@@ -2,8 +2,10 @@ name: Team 2 Bitbucket Mirror
 
 on:
   schedule:
-    - cron: "58 23 * * *" # Run task everyday on 2358
+    - cron: "58 13 * * *" # Run task everyday on 1358 UTC
   workflow_dispatch:
+
+permissions: read-all
 
 # Only allow one mirror job to run at a time, cancel old jobs
 concurrency:
@@ -15,7 +17,7 @@ jobs:
     runs-on: "ubuntu-latest"
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0 # Fetch all history for all branches and tags
 
