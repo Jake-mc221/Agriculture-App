@@ -3,7 +3,7 @@
 import { Button } from "@/components/common/Button";
 import { PageContainer } from "@/components/common/PageContainer";
 import { Select } from "@/components/common/Select";
-import { usePhotoGallery } from "@/components/common/usePhotoGallery";
+import { usePhotoGallery } from "@/hooks/usePhotoGallery";
 import { TbPhoto } from "react-icons/tb";
 import Link from "next/link";
 export default function Home() {

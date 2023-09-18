@@ -1,21 +1,25 @@
-import { ourImage } from "./ourImage";
+import { ImageType } from "@/types/ImageType";
 import React from "react";
-import Image from "next/image";
+import { PageContainer } from "./PageContainer";
 
-type Props = {
-  ourimages: ourImage[];
-};
-
-const PhotoGallery: React.FC<Props> = ({ ourimages }) => {
+export function PhotoGallery({ images }: { images: ImageType[] }) {
   return (
-    <div className="grid grid-cols-2 gap-4">
-      <div className="row-start-2 row-span-2 ...">
-        {ourimages.map((pho, id) => (
-          <img key={id} src={pho.webviewPath} />
+    <PageContainer>
+      <div className="flex flex-wrap gap-5 justify-center items-center">
+        {images.map((photo, key) => (
+          <div
+            key={key}
+            className="w-20 h-32 rounded bg-gray-200 border-black/20 border"
+          >
+            {/*  eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={photo.webPath}
+              alt=""
+              className="object-cover w-full h-full"
+            />
+          </div>
         ))}
       </div>
-    </div>
+    </PageContainer>
   );
-};
-
-export default PhotoGallery;
+}
