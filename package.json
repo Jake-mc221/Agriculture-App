@@ -57,7 +57,7 @@
     "@storybook/blocks": "^7.4.1",
     "@storybook/nextjs": "^7.4.1",
     "@storybook/react": "^7.4.1",
-    "@storybook/testing-library": "^0.2.0",
+    "@storybook/testing-library": "^0.2.1",
     "@types/react-modal": "^3.16.0",
     "@types/react-resizable": "^3.0.4",
     "@typescript-eslint/eslint-plugin": "^6.7.2",
