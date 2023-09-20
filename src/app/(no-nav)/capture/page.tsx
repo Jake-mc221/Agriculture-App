@@ -35,15 +35,16 @@ const tabOptions: TabOption[] = [
 ];
 
 export default function Home() {
-  const { image } = useContext(PhotoContext);
+  const { images } = useContext(PhotoContext);
 
   return (
     <div className="relative flex flex-col h-full gap-10">
-      {image ? 
+      {images ? 
         (
           <img 
-            src={image.webPath}
-            className="h-50"/>
+            src={images[images.length-1].webviewPath}
+            className="h-full object-cover"
+          />
         ) :
         (
           <div className="flex w-full justify-center items-center h-full bg-black rounded border border-black/20">
@@ -52,7 +53,7 @@ export default function Home() {
         )
       }
       
-      <form className="fixed bottom-2 rounded-2xl  py-2 px-2 bg-slate-100 w-full flex flex-col items-center gap-5">  
+      <form className="fixed bottom-0 rounded-2xl  py-2 px-2 bg-slate-100 w-full flex flex-col items-center gap-5">  
         <Tabs options={tabOptions}/>
 
       </form>

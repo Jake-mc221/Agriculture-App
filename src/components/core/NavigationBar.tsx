@@ -10,6 +10,7 @@ import { Button } from "../common/Button";
 import { SetStateAction, useState } from "react";
 import { useContext } from "react";
 import { PhotoContext } from "@/app/context";
+import { redirect } from "next/navigation";
 
 export default function NavigationBar() {
   const [activeLink, setActiveLink] = useState("home"); // current active link is home
@@ -28,7 +29,7 @@ export default function NavigationBar() {
             component={Link}
             onClick={async () => 
               {await takePhoto();
-              window.location.href = "/capture";
+              redirect("/capture");
             }}
             href="/capture"
             className=" self-center z-10 flex justify-center items-center h-16 w-16 rounded-full shadow-md absolute bottom-12 bg-gradient-to-t from-primary to-green-400"

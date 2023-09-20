@@ -12,7 +12,7 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const photoGallery = usePhotoGallery();
+  const {image, images, takePhoto} = usePhotoGallery();
   
   return (
     <html lang="en">
@@ -23,7 +23,7 @@ export default function RootLayout({
       <body
         className={`flex flex-col h-screen ${inter.className}`}
       >
-        <PhotoContext.Provider value={photoGallery}>
+        <PhotoContext.Provider value={{image, images, takePhoto}}>
           {children}
         </PhotoContext.Provider>
       </body>
