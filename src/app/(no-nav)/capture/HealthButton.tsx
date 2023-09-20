@@ -17,8 +17,8 @@ export function HealthButton({healthStatus, checked}: {healthStatus: string, che
   }
 
   return (
-    <div className="bg-gray-200 rounded-full p-2">
-      <MdEnergySavingsLeaf className={twJoin(colour, checked ? "ring-2 ring-primary ring-offset-2" : "", "h-12, w-12")}/>
+    <div className={twJoin(checked ? "ring-2 ring-primary ring-offset-2" : "", "flex place-content-center rounded-full bg-gray-200  p-2")}>
+      <MdEnergySavingsLeaf className={twJoin(colour, "w-12 h-12")}/>
     </div>
   )
 }

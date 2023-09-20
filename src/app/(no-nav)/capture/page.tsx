@@ -4,7 +4,7 @@ import { TbPhoto } from "react-icons/tb";
 import BoundingBox from "@/components/common/BoundingBox";
 import { ComboBox } from "@/components/common/ComboBox";
 import { Tabs, TabOption } from "@/components/common/Tabs";
-import PlantHealth from "./PlantHealth";
+import { Health } from "./Health";
 import { useContext } from "react";
 import { PhotoContext } from "@/app/context";
 
@@ -30,7 +30,7 @@ const tabOptions: TabOption[] = [
 
   {
     name: "Plant Health",
-    content: (<PlantHealth/>)
+    content: (<Health/>)
   }
 ];
 

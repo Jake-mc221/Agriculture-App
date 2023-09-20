@@ -92,3 +92,7 @@ wget-log
 
 # Development certificate.
 .dev_cert
+
+# Storybook
+storybook-static/
+build-storybook.log
