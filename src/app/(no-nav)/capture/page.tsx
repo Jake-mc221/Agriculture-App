@@ -9,31 +9,41 @@ import { useState, useCallback, useContext } from "react";
 import { PhotoContext } from "@/app/context";
 import { Button } from "@/components/common/Button";
 import { MdDone } from "react-icons/md";
+import { BsCheck2Square } from "react-icons/bs";
+import { Submit } from "./Submit";
 
 
 const tabOptions: TabOption[] = [
   {
-    name: "Crop Type",
+    display: "Crop Type",
+    name: "crop_type",
     content: (<ComboBox
-      label="Crop Type"
       options={[{ name: "Crop 1" }, { name: "Crop 2" }, { name: "Crop 3" }]}
       getOptionName={(option) => option.name}
     />)
   },
 
   {
-    name: "Soil Type",
+    display: "Soil Type",
+    name: "soil_type",
     content: (<ComboBox
-      label="Soil Type"
       options={[{ name: "Soil 1" }, { name: "Soil 2" }, { name: "Soil 3" }]}
       getOptionName={(option) => option.name}
     />)
   },
 
   {
-    name: "Plant Health",
+    display: "Plant Health",
+    name: "plant_health",
     content: (<Health/>)
+  },
+
+  {
+    display: (<BsCheck2Square className=" w-7 h-7"/>),
+    name: "submit",
+    content: (<Submit/>)
   }
+
 ];
 
 export default function Home() {
@@ -45,7 +55,14 @@ export default function Home() {
  
   return (
     <div className="relative flex flex-col h-full gap-10">
-      {images ? 
+      {bounded ? 
+        (
+          <img 
+            src={images[images.length-1].webviewPath}
+            className="h-full object-cover"
+            alt="Captured image"
+          />
+        ) :
         (
           <BoundingBox
             image={
@@ -59,11 +76,6 @@ export default function Home() {
             informDrag={setDragging}
           />
           
-        ) :
-        (
-          <div className="flex w-full justify-center items-center h-full bg-black rounded border border-black/20">
-            <TbPhoto aria-hidden className="invert bg-white text-6xl" />
-          </div>
         )
       }
 

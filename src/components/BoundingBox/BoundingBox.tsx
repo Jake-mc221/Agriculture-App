@@ -9,10 +9,6 @@ import React, {
 } from "react";
 import { Resizer } from "./Resizer";
 
-export type BoundingProps = {
-  image: ReactNode;
-};
-
 type BoxCoords = {
   positionX: number;
   positionY: number;
@@ -20,7 +16,7 @@ type BoxCoords = {
   lengthY: number;
 };
 
-export default function BoundingBox({image, informDrag}: { image: BoundingProps, informDrag: (val: boolean) => (void)}) {
+export default function BoundingBox({image, informDrag}: { image: ReactNode, informDrag: (val: boolean) => (void)}) {
   const boxRef = useRef<HTMLDivElement>(null);
 
   // Using a callback ref.
@@ -75,7 +71,7 @@ export default function BoundingBox({image, informDrag}: { image: BoundingProps,
 
   const setDragging = useCallback((val: boolean) => {
     _setDragging(val);
-    informDrag(dragging);
+    informDrag(val);
   }, []);
 
   // Subscribe to the resize event on the div.
@@ -143,6 +139,7 @@ export default function BoundingBox({image, informDrag}: { image: BoundingProps,
               };
             });
           }}
+          informDrag={informDrag}
         ></Resizer>
         <Resizer
           className="rounded-full bg-white w-4 h-4 absolute left-[-4px] bottom-[-4px] cursor-nesw-resize"
@@ -156,6 +153,7 @@ export default function BoundingBox({image, informDrag}: { image: BoundingProps,
               };
             });
           }}
+          informDrag={informDrag}
         ></Resizer>
         <Resizer
           className="rounded-full bg-white w-4 h-4 absolute right-[-4px] top-[-4px] cursor-nesw-resize"
@@ -169,6 +167,7 @@ export default function BoundingBox({image, informDrag}: { image: BoundingProps,
               };
             });
           }}
+          informDrag={informDrag}
         ></Resizer>
         <Resizer
           className="rounded-full bg-white w-4 h-4 absolute right-[-4px] bottom-[-4px] cursor-nwse-resize"
@@ -182,6 +181,7 @@ export default function BoundingBox({image, informDrag}: { image: BoundingProps,
               };
             });
           }}
+          informDrag={informDrag}
         ></Resizer>
 
         {/* Todo: Add vertical and horizontal resizers. */}

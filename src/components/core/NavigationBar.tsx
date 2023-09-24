@@ -8,9 +8,9 @@ import { MdAddChart } from "react-icons/md";
 import Link from "next/link";
 import { Button } from "../common/Button";
 import { SetStateAction, useState } from "react";
-import { useContext } from "react";
+import { useContext, useCallback } from "react";
 import { PhotoContext } from "@/app/context";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { usePathname } from "next/navigation";
 
 export default function NavigationBar() {
@@ -21,6 +21,12 @@ export default function NavigationBar() {
 
   const { takePhoto } = useContext(PhotoContext);
   const path = usePathname();
+  const r = useRouter();
+
+  const capture = useCallback(async () => {
+    await takePhoto();
+    r.push("/capture");
+  }, []);
 
   return (
     <>
@@ -29,10 +35,7 @@ export default function NavigationBar() {
           <Button
             intent="unstyled"
             component={Link}
-            onClick={async () => 
-              {await takePhoto();
-              redirect("/capture");
-            }}
+            onClick={capture}
             href="/capture"
             className={
               "self-center z-10 flex justify-center items-center h-20 w-20 rounded-full shadow-md absolute bottom-24 bg-gradient-to-t from-primary to-green-300" +
