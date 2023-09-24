@@ -20,7 +20,13 @@ type BoxCoords = {
   lengthY: number;
 };
 
-export default function BoundingBox({image, informDrag}: { image: BoundingProps, informDrag: (val: boolean) => (void)}) {
+export default function BoundingBox({
+  image,
+  informDrag,
+}: {
+  image: BoundingProps;
+  informDrag: (val: boolean) => void;
+}) {
   const boxRef = useRef<HTMLDivElement>(null);
 
   // Using a callback ref.
