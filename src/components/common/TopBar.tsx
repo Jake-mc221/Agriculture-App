@@ -17,7 +17,7 @@ export function TopBar() {
     r.push("/capture");
   }, [r, takePhoto]);
   return (
-    <div className="fixed top-0 w-full h-10 flex bg-black justify-between z-50 ">
+    <div className="top-0 w-full h-10 flex bg-black justify-between z-50 ">
       {/*Back button */}
       <Button
         className="text-green-400 m-2"

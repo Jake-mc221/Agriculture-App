@@ -64,7 +64,7 @@ export default function Home() {
             // eslint-disable-next-line @next/next/no-img-element
             <img
               src={images[images.length - 1].webviewPath}
-              className="object-scale-down"
+              className="object-cover"
               alt="Captured image"
             />
           }
