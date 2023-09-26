@@ -17,7 +17,7 @@ export function TopBar() {
     r.push("/capture");
   }, [r, takePhoto]);
   return (
-    <div className="w-full h-10 flex bg-black justify-between">
+    <div className="fixed top-0 w-full h-10 flex bg-black justify-between z-50 ">
       {/*Back button */}
       <Button
         className="text-green-400 m-2"
@@ -50,16 +50,6 @@ export function TopBar() {
           href="/capture"
         >
           <BsArrowRepeat className="m-auto self-center text-2xl justify-center" />
-        </Button>
-
-        {/*Go to gallery button*/}
-        <Button
-          className="text-white flex justify-end mr-1 opacity-80"
-          intent="unstyled"
-          component={Link}
-          href="/gallery"
-        >
-          <RiGalleryLine className="m-auto self-center text-2xl justify-center" />
         </Button>
       </div>
     </div>

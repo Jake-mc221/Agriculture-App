@@ -56,26 +56,20 @@ export default function Home() {
   const toLabelling = useCallback(() => setBounded(true), []);
 
   return (
-    <div className="flex flex-col h-full w-full">
+    <div className="flex bg-black flex-col h-full w-full">
       <TopBar />
-      <div className="flex-grow">
-        {images ? (
-          <BoundingBox
-            image={
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
-                src={images[images.length - 1].webviewPath}
-                className="object-cover"
-                alt="Captured image"
-              />
-            }
-            informDrag={setDragging}
-          />
-        ) : (
-          <div className="flex w-full justify-center items-center h-full bg-black rounded border border-black/20">
-            <TbPhoto aria-hidden className="invert bg-white text-6xl" />
-          </div>
-        )}
+      <div className="grow z-0">
+        <BoundingBox
+          image={
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={images[images.length - 1].webviewPath}
+              className="object-scale-down"
+              alt="Captured image"
+            />
+          }
+          informDrag={setDragging}
+        />
       </div>
 
       <div className="self-end w-full">
@@ -86,7 +80,7 @@ export default function Home() {
         ) : (
           !dragging && (
             <div
-              className="absolute bottom-16 right-10 p-2 rounded-full shadow-2xl text-white bg-gray-900"
+              className="fixed bottom-16 right-10 p-2 rounded-full shadow-2xl text-white bg-gray-900 z-50"
               onClick={toLabelling}
             >
               <MdDone className="h-12 w-12 " />
