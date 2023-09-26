@@ -9,10 +9,6 @@ import React, {
 } from "react";
 import { Resizer } from "./Resizer";
 
-export type BoundingProps = {
-  image: ReactNode;
-};
-
 type BoxCoords = {
   positionX: number;
   positionY: number;
@@ -20,12 +16,18 @@ type BoxCoords = {
   lengthY: number;
 };
 
-export default function BoundingBox({ image }: BoundingProps) {
+export default function BoundingBox({
+  image,
+  informDrag,
+}: {
+  image: ReactNode;
+  informDrag: (val: boolean) => void;
+}) {
   const boxRef = useRef<HTMLDivElement>(null);
 
   // Using a callback ref.
   const [boundaryRef, setBoundaryRef] = useState<HTMLDivElement>();
-  const [dragging, setDragging] = useState(false);
+  const [dragging, _setDragging] = useState(false);
   const [boundarySize, setBoundarySize] = useState<BoxCoords>({
     positionX: 0,
     positionY: 0,
@@ -73,6 +75,14 @@ export default function BoundingBox({ image }: BoundingProps) {
     [setBoxCoords],
   );
 
+  const setDragging = useCallback(
+    (val: boolean) => {
+      _setDragging(val);
+      informDrag(val);
+    },
+    [informDrag],
+  );
+
   // Subscribe to the resize event on the div.
   useEffect(() => {
     const resizeObserver = new ResizeObserver(boundaryResize);
@@ -89,13 +99,13 @@ export default function BoundingBox({ image }: BoundingProps) {
       ref={(ref) => {
         setBoundaryRef(ref ?? undefined);
       }}
-      className="flex relative justify-center p-2"
+      className="flex bg-black h-full w-full relative justify-center"
     >
       {image}
       <div
         ref={boxRef}
         className={
-          "absolute self-center cursor-move border border-black touch-pinch-zoom"
+          "absolute self-center cursor-move m-4 border-2 border-white touch-pinch-zoom"
         }
         onPointerDown={(e) => {
           boxRef.current?.setPointerCapture(e.pointerId);
@@ -112,7 +122,7 @@ export default function BoundingBox({ image }: BoundingProps) {
             });
           }
         }}
-        onPointerUp={(_) => {
+        onPointerUp={() => {
           setDragging(false);
         }}
         style={{
@@ -127,7 +137,7 @@ export default function BoundingBox({ image }: BoundingProps) {
         }}
       >
         <Resizer
-          className="rounded bg-black w-2 h-2 absolute left-[-4px] top-[-4px] cursor-nwse-resize"
+          className="rounded-full bg-white w-4 h-4 absolute left-[-4px] top-[-4px] cursor-nwse-resize"
           moveCallback={(dx, dy) => {
             setBoxCoords((old) => {
               return {
@@ -138,9 +148,10 @@ export default function BoundingBox({ image }: BoundingProps) {
               };
             });
           }}
+          informDrag={informDrag}
         ></Resizer>
         <Resizer
-          className="rounded bg-black w-2 h-2 absolute left-[-4px] bottom-[-4px] cursor-nesw-resize"
+          className="rounded-full bg-white w-4 h-4 absolute left-[-4px] bottom-[-4px] cursor-nesw-resize"
           moveCallback={(dx, dy) => {
             setBoxCoords((old) => {
               return {
@@ -151,9 +162,10 @@ export default function BoundingBox({ image }: BoundingProps) {
               };
             });
           }}
+          informDrag={informDrag}
         ></Resizer>
         <Resizer
-          className="rounded bg-black w-2 h-2 absolute right-[-4px] top-[-4px] cursor-nesw-resize"
+          className="rounded-full bg-white w-4 h-4 absolute right-[-4px] top-[-4px] cursor-nesw-resize"
           moveCallback={(dx, dy) => {
             setBoxCoords((old) => {
               return {
@@ -164,9 +176,10 @@ export default function BoundingBox({ image }: BoundingProps) {
               };
             });
           }}
+          informDrag={informDrag}
         ></Resizer>
         <Resizer
-          className="rounded bg-black w-2 h-2 absolute right-[-4px] bottom-[-4px] cursor-nwse-resize"
+          className="rounded-full bg-white w-4 h-4 absolute right-[-4px] bottom-[-4px] cursor-nwse-resize"
           moveCallback={(dx, dy) => {
             setBoxCoords((old) => {
               return {
@@ -177,6 +190,7 @@ export default function BoundingBox({ image }: BoundingProps) {
               };
             });
           }}
+          informDrag={informDrag}
         ></Resizer>
 
         {/* Todo: Add vertical and horizontal resizers. */}

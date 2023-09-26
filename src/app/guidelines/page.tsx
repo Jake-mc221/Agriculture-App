@@ -1,10 +1,21 @@
+"use client";
+
 import { RxCross2 } from "react-icons/rx";
 import { TiTick } from "react-icons/ti";
 import { Button } from "@/components/common/Button";
 import Link from "next/link";
+import { useCallback, useContext } from "react";
+import { PhotoContext } from "@/app/context";
+import { useRouter } from "next/navigation";
 
 /* eslint-disable @next/next/no-img-element */
 export default function CaptureGuidelines() {
+  const { takePhoto } = useContext(PhotoContext);
+  const r = useRouter();
+  const capture = useCallback(async () => {
+    await takePhoto();
+    r.push("/capture");
+  }, [r, takePhoto]);
   return (
     <div className="flex flex-col items-center w-full h-full">
       <h1 className="mb-4 pt-5">Capture Guidelines</h1>
@@ -55,7 +66,11 @@ export default function CaptureGuidelines() {
         </div>
       </div>
 
-      <Button className="my-14" component={Link} href="/capture">
+      <Button
+        className="my-14"
+        component={Link}
+        href="/capture"
+      >
         Continue
       </Button>
     </div>

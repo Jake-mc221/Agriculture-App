@@ -6,7 +6,8 @@ export default function Home() {
   const { images } = usePhotoGallery();
   return (
     <PageContainer>
-      <div className="flex-grow">
+      <h1 className="mx-auto text-green-600 mt-2"> Your Gallery </h1>
+      <div className="grid-cols-3 m-10">
         <div className="flex h-full flex-wrap gap-5">
           {images.map((photo, key) => (
             <div
@@ -15,8 +16,8 @@ export default function Home() {
             >
               {/*  eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src={photo.webPath}
-                alt=""
+                src={photo == null ? undefined : photo.webPath}
+                alt="photo"
                 className="object-cover w-full h-full"
               />
             </div>

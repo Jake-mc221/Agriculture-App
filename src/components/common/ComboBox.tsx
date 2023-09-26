@@ -8,7 +8,7 @@ export function ComboBox<T>({
   options,
   getOptionName,
 }: {
-  label: string;
+  label?: string;
   placeholder?: string;
   options: T[] | ((query: string) => T[] | Promise<T[]>);
   getOptionName: (v: T) => string;
