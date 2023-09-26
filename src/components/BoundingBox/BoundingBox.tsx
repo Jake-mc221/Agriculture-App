@@ -9,10 +9,6 @@ import React, {
 } from "react";
 import { Resizer } from "./Resizer";
 
-export type BoundingProps = {
-  image: ReactNode;
-};
-
 type BoxCoords = {
   positionX: number;
   positionY: number;
@@ -24,7 +20,7 @@ export default function BoundingBox({
   image,
   informDrag,
 }: {
-  image: BoundingProps;
+  image: ReactNode;
   informDrag: (val: boolean) => void;
 }) {
   const boxRef = useRef<HTMLDivElement>(null);
@@ -79,10 +75,13 @@ export default function BoundingBox({
     [setBoxCoords],
   );
 
-  const setDragging = useCallback((val: boolean) => {
-    _setDragging(val);
-    informDrag(dragging);
-  }, []);
+  const setDragging = useCallback(
+    (val: boolean) => {
+      _setDragging(val);
+      informDrag(dragging);
+    },
+    [dragging, informDrag],
+  );
 
   // Subscribe to the resize event on the div.
   useEffect(() => {

@@ -7,8 +7,8 @@ import { Tabs, TabOption } from "@/components/common/Tabs";
 import { Health } from "./Health";
 import { useState, useCallback, useContext } from "react";
 import { PhotoContext } from "@/app/context";
-import { Button } from "@/components/common/Button";
 import { MdDone } from "react-icons/md";
+import { TopBar } from "@/components/common/TopBar";
 
 const tabOptions: TabOption[] = [
   {
@@ -47,12 +47,18 @@ export default function Home() {
   const toLabelling = useCallback(() => setBounded(true), []);
 
   return (
-    <div className="relative flex flex-col h-full gap-10">
+    <div className="relative flex flex-col h-full">
+      <TopBar />
       {images ? (
         <BoundingBox
           image={
+            // eslint-disable-next-line @next/next/no-img-element
             <img
-              src={images[images.length - 1].webviewPath}
+              src={
+                images[images.length - 1] === undefined
+                  ? null
+                  : images[images.length - 1].webviewPath
+              }
               className="h-full object-cover"
               alt="Captured image"
             />
@@ -70,7 +76,7 @@ export default function Home() {
           <Tabs options={tabOptions} />
         </form>
       ) : (
-        !dragging && (
+        dragging && (
           <div
             className="absolute bottom-16 right-10 p-2 rounded-full shadow-2xl text-white bg-gray-900"
             onClick={toLabelling}

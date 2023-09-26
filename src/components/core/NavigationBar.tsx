@@ -7,17 +7,16 @@ import { BsFillCameraFill } from "react-icons/bs";
 import { MdAddChart } from "react-icons/md";
 import Link from "next/link";
 import { Button } from "../common/Button";
-import { SetStateAction, useState } from "react";
 import { useContext } from "react";
 import { PhotoContext } from "@/app/context";
 import { redirect } from "next/navigation";
 import { usePathname } from "next/navigation";
 
 export default function NavigationBar() {
-  const [activeLink, setActiveLink] = useState("home"); // current active link is home
+  /*const [activeLink, setActiveLink] = useState("home"); // current active link is home
   const changeActive = (link: SetStateAction<string>) => {
     setActiveLink(link);
-  };
+  };*/
 
   const { takePhoto } = useContext(PhotoContext);
   const path = usePathname();
@@ -58,7 +57,7 @@ export default function NavigationBar() {
               component={Link}
               onClick={async () => {
                 await takePhoto();
-                redirect("/capture");
+                //redirect("/capture");
               }}
               href="/capture"
               className="m-auto w-full h-full flex rounded-md "
