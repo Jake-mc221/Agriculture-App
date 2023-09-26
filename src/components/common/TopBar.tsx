@@ -4,11 +4,18 @@ import Link from "next/link";
 import { BsArrowRepeat } from "react-icons/bs";
 import { RiGalleryLine } from "react-icons/ri";
 import { PhotoContext } from "@/app/context";
-import { useContext } from "react";
+import { useContext, useCallback } from "react";
+import { HiOutlineInformationCircle } from "react-icons/hi";
+import { useRouter } from "next/navigation";
 
 export function TopBar() {
   const { takePhoto } = useContext(PhotoContext);
   const { images } = useContext(PhotoContext);
+  const r = useRouter();
+  const capture = useCallback(async () => {
+    await takePhoto();
+    r.push("/capture");
+  }, [r, takePhoto]);
   return (
     <div className="w-full h-10 flex bg-black justify-between">
       {/*Back button */}
@@ -22,14 +29,23 @@ export function TopBar() {
       </Button>
 
       <div className="flex gap-3">
+        {/*Link to guidelines page */}
+        <Button
+          className="text-white flex justify-end opacity-80"
+          intent="unstyled"
+          component={Link}
+          href="/guidelines"
+        >
+          <HiOutlineInformationCircle className="m-auto self-center text-2xl justify-center" />
+        </Button>
         {/*Retake photo button*/}
         <Button
-          className="text-white flex justify-end opacity-60"
+          className="text-white flex justify-end opacity-80"
           intent="unstyled"
           component={Link}
           onClick={async () => {
             delete images[images.length - 1];
-            await takePhoto();
+            capture();
           }}
           href="/capture"
         >
@@ -38,7 +54,7 @@ export function TopBar() {
 
         {/*Go to gallery button*/}
         <Button
-          className="text-white flex justify-end mr-1 opacity-60"
+          className="text-white flex justify-end mr-1 opacity-80"
           intent="unstyled"
           component={Link}
           href="/gallery"

@@ -7,19 +7,20 @@ import { BsFillCameraFill } from "react-icons/bs";
 import { MdAddChart } from "react-icons/md";
 import Link from "next/link";
 import { Button } from "../common/Button";
-import { useContext } from "react";
+import { useContext, useCallback } from "react";
 import { PhotoContext } from "@/app/context";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { usePathname } from "next/navigation";
 
 export default function NavigationBar() {
-  /*const [activeLink, setActiveLink] = useState("home"); // current active link is home
-  const changeActive = (link: SetStateAction<string>) => {
-    setActiveLink(link);
-  };*/
-
   const { takePhoto } = useContext(PhotoContext);
   const path = usePathname();
+  const r = useRouter();
+
+  const capture = useCallback(async () => {
+    await takePhoto();
+    r.push("/capture");
+  }, [r, takePhoto]);
 
   return (
     <>
@@ -55,10 +56,7 @@ export default function NavigationBar() {
             <Button
               intent="unstyled"
               component={Link}
-              onClick={async () => {
-                await takePhoto();
-                //redirect("/capture");
-              }}
+              onClick={capture}
               href="/capture"
               className="m-auto w-full h-full flex rounded-md "
             >

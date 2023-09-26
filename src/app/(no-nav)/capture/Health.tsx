@@ -9,7 +9,6 @@ export function Health() {
 
   return (
     <RadioGroup className="flex flex-col gap-5" value={health} onChange={setHealth}>
-      <RadioGroup.Label className="text-xl text-center">How is the health of the plant?</RadioGroup.Label>
       <div className="flex justify-center gap-3">
 
       {healthStatus.map((rating) => (

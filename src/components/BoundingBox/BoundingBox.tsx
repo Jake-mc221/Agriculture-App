@@ -78,9 +78,9 @@ export default function BoundingBox({
   const setDragging = useCallback(
     (val: boolean) => {
       _setDragging(val);
-      informDrag(dragging);
+      informDrag(val);
     },
-    [dragging, informDrag],
+    [informDrag],
   );
 
   // Subscribe to the resize event on the div.
@@ -99,7 +99,7 @@ export default function BoundingBox({
       ref={(ref) => {
         setBoundaryRef(ref ?? undefined);
       }}
-      className="flex bg-black h-full relative justify-center"
+      className="flex bg-black h-full w-full relative justify-center"
     >
       {image}
       <div
@@ -148,6 +148,7 @@ export default function BoundingBox({
               };
             });
           }}
+          informDrag={informDrag}
         ></Resizer>
         <Resizer
           className="rounded-full bg-white w-4 h-4 absolute left-[-4px] bottom-[-4px] cursor-nesw-resize"
@@ -161,6 +162,7 @@ export default function BoundingBox({
               };
             });
           }}
+          informDrag={informDrag}
         ></Resizer>
         <Resizer
           className="rounded-full bg-white w-4 h-4 absolute right-[-4px] top-[-4px] cursor-nesw-resize"
@@ -174,6 +176,7 @@ export default function BoundingBox({
               };
             });
           }}
+          informDrag={informDrag}
         ></Resizer>
         <Resizer
           className="rounded-full bg-white w-4 h-4 absolute right-[-4px] bottom-[-4px] cursor-nwse-resize"
@@ -187,6 +190,7 @@ export default function BoundingBox({
               };
             });
           }}
+          informDrag={informDrag}
         ></Resizer>
 
         {/* Todo: Add vertical and horizontal resizers. */}

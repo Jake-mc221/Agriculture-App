@@ -1,16 +1,25 @@
 "use client";
 import { ComponentPropsWithoutRef, useRef, useState } from "react";
 import { twMerge } from "tailwind-merge";
+import { useCallback } from "react";
 
 export function Resizer({
   moveCallback,
   className,
+  informDrag,
   ...divProps
 }: {
-  moveCallback: (dx: number, dy: number) => void;
+  moveCallback: (dx: number, dy: number) => void,
+  informDrag: (val: boolean) => (void)
 } & ComponentPropsWithoutRef<"div">) {
-  const [dragging, setDragging] = useState(false);
+
+  const [dragging, _setDragging] = useState(false);
   const resizerRef = useRef<HTMLDivElement>(null);
+
+  const setDragging = useCallback((val: boolean) => {
+    _setDragging(val);
+    informDrag(val);
+  }, []);
 
   return (
     <div

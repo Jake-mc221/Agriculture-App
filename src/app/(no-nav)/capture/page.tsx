@@ -9,13 +9,15 @@ import { useState, useCallback, useContext } from "react";
 import { PhotoContext } from "@/app/context";
 import { MdDone } from "react-icons/md";
 import { TopBar } from "@/components/common/TopBar";
+import { BsCheck2Square } from "react-icons/bs";
+import { Submit } from "./Submit";
 
 const tabOptions: TabOption[] = [
   {
-    name: "Crop Type",
+    display: "Crop Type",
+    name: "crop_type",
     content: (
       <ComboBox
-        label="Crop Type"
         options={[{ name: "Crop 1" }, { name: "Crop 2" }, { name: "Crop 3" }]}
         getOptionName={(option) => option.name}
       />
@@ -23,10 +25,10 @@ const tabOptions: TabOption[] = [
   },
 
   {
-    name: "Soil Type",
+    display: "Soil Type",
+    name: "soil_type",
     content: (
       <ComboBox
-        label="Soil Type"
         options={[{ name: "Soil 1" }, { name: "Soil 2" }, { name: "Soil 3" }]}
         getOptionName={(option) => option.name}
       />
@@ -34,8 +36,15 @@ const tabOptions: TabOption[] = [
   },
 
   {
-    name: "Plant Health",
+    display: "Plant Health",
+    name: "plant_health",
     content: <Health />,
+  },
+
+  {
+    display: <BsCheck2Square className=" w-7 h-7" />,
+    name: "submit",
+    content: <Submit />,
   },
 ];
 
@@ -47,44 +56,44 @@ export default function Home() {
   const toLabelling = useCallback(() => setBounded(true), []);
 
   return (
-    <div className="relative flex flex-col h-full">
+    <div className="flex flex-col h-full w-full">
       <TopBar />
-      {images ? (
-        <BoundingBox
-          image={
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              src={
-                images[images.length - 1] === undefined
-                  ? null
-                  : images[images.length - 1].webviewPath
-              }
-              className="h-full object-cover"
-              alt="Captured image"
-            />
-          }
-          informDrag={setDragging}
-        />
-      ) : (
-        <div className="flex w-full justify-center items-center h-full bg-black rounded border border-black/20">
-          <TbPhoto aria-hidden className="invert bg-white text-6xl" />
-        </div>
-      )}
-
-      {bounded ? (
-        <form className="fixed bottom-0 rounded-2xl  py-2 px-2 bg-slate-100 w-full flex flex-col items-center gap-5">
-          <Tabs options={tabOptions} />
-        </form>
-      ) : (
-        dragging && (
-          <div
-            className="absolute bottom-16 right-10 p-2 rounded-full shadow-2xl text-white bg-gray-900"
-            onClick={toLabelling}
-          >
-            <MdDone className="h-12 w-12 " />
+      <div className="flex-grow">
+        {images ? (
+          <BoundingBox
+            image={
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={images[images.length - 1].webviewPath}
+                className="object-cover"
+                alt="Captured image"
+              />
+            }
+            informDrag={setDragging}
+          />
+        ) : (
+          <div className="flex w-full justify-center items-center h-full bg-black rounded border border-black/20">
+            <TbPhoto aria-hidden className="invert bg-white text-6xl" />
           </div>
-        )
-      )}
+        )}
+      </div>
+
+      <div className="self-end w-full">
+        {bounded ? (
+          <form className="rounded-2xl py-2 px-2 bg-slate-100 w-full flex flex-col items-center gap-5">
+            <Tabs options={tabOptions} />
+          </form>
+        ) : (
+          !dragging && (
+            <div
+              className="absolute bottom-16 right-10 p-2 rounded-full shadow-2xl text-white bg-gray-900"
+              onClick={toLabelling}
+            >
+              <MdDone className="h-12 w-12 " />
+            </div>
+          )
+        )}
+      </div>
     </div>
   );
 }
