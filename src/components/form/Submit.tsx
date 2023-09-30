@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { useCallback, useContext } from "react";
 import { PhotoContext } from "@/app/context";
 
-export function Submit() {
+export default function Submit() {
   const { takePhoto } = useContext(PhotoContext)
   const router = useRouter();
 

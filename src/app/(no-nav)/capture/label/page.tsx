@@ -3,12 +3,12 @@
 import BoundingBox from "@/components/BoundingBox/BoundingBox";
 import { Tabs, TabOption } from "@/components/common/Tabs";
 import { ComboBox } from "@/components/common/ComboBox";
-import { Health } from "../Health";
+import Health from "../../../../components/form/Health";
 import { useContext } from "react";
 import { PhotoContext } from "@/app/context";
 import { BsCheck2Square } from "react-icons/bs";
-import { Submit } from "../Submit";
-
+import Submit from "@/components/form/Submit";
+import { useForm, Controller } from "react-hook-form";
 
 const tabOptions: TabOption[] = [
   {
@@ -49,6 +49,7 @@ const tabOptions: TabOption[] = [
 
 export default function Page() {
   const { images } = useContext(PhotoContext);
+  const {control} = useForm();
 
   return (
     <>
@@ -66,7 +67,15 @@ export default function Page() {
       </div>
 
       <form className="rounded-2xl py-2 px-2 bg-slate-100 w-full flex flex-col items-center gap-5">
-        <Tabs options={tabOptions} />
+        <Controller
+          name="plant_health"
+          control={control}
+          render={({field: { onChange }}) => (
+            <Health onChange={onChange}/>
+          )}
+        
+        />
+        <Health/>
       </form>
     
     </>

@@ -1,23 +1,36 @@
 import { Fragment, useEffect, useState } from "react";
 import { Combobox, Transition } from "@headlessui/react";
 import { BsCheck, BsChevronDown } from "react-icons/bs";
+import { FieldPath, FormValues } from "./FormValues";
+import { Control, useController } from "react-hook-form";
+
 
 export function ComboBox<T>({
   label,
   placeholder,
   options,
   getOptionName,
+  name,
+  control
 }: {
   label?: string;
   placeholder?: string;
   options: T[] | ((query: string) => T[] | Promise<T[]>);
   getOptionName: (v: T) => string;
+  name: FieldPath;
+  control: Control<FormValues>;
 }) {
   const [selected, setSelected] = useState<T | null>(null);
   const [query, setQuery] = useState<string>("");
   const [availableOptions, setAvailableOptions] = useState<T[]>(
     typeof options !== "function" ? options : [],
   );
+
+  const { field: { onChange } } = useController({
+    name,
+    control,
+    rules: { required: true }
+  });
 
   useEffect(() => {
     (async () => {
@@ -37,7 +50,10 @@ export function ComboBox<T>({
   }, [getOptionName, options, query]);
 
   return (
-    <Combobox value={selected} onChange={setSelected}>
+    <Combobox value={selected} onChange={(e) => {
+        setSelected(e);
+        onChange(e);
+      }}>
       <Combobox.Label>
         <h2>{label}</h2>
       </Combobox.Label>
