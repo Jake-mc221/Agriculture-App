@@ -21,7 +21,7 @@ export default function BoundingBox({
   informDrag,
 }: {
   image: ReactNode;
-  informDrag: (val: boolean) => void;
+  informDrag?: (val: boolean) => void;
 }) {
   const boxRef = useRef<HTMLDivElement>(null);
 

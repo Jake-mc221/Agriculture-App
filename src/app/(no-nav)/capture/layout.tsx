@@ -1,14 +1,14 @@
-import { CapacitorPwaLoader } from "@/components/utility/CapacitorPwaLoader";
+"use client";
 
-export default function NavlessLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+import { TopBar } from "@/components/common/TopBar";
+
+export default function ImageLayout({ children } : 
+  { children: React.ReactNode}) {
+
   return (
-      <main className="h-full">
-          {children}
-          <CapacitorPwaLoader />
-      </main>
+    <div className="flex bg-black flex-col h-full w-full z-0">
+      <TopBar />
+      {children}
+    </div>
   );
 }

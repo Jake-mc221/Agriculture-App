@@ -15,12 +15,12 @@ import { usePathname } from "next/navigation";
 export default function NavigationBar() {
   const { takePhoto } = useContext(PhotoContext);
   const path = usePathname();
-  const r = useRouter();
+  const router = useRouter();
 
   const capture = useCallback(async () => {
     await takePhoto();
-    r.push("/capture");
-  }, [r, takePhoto]);
+    router.push("/capture/bound");
+  }, [router, takePhoto]);
 
   return (
     <>
@@ -55,9 +55,7 @@ export default function NavigationBar() {
             </Button>
             <Button
               intent="unstyled"
-              component={Link}
               onClick={capture}
-              href="/capture"
               className="m-auto w-full h-full flex rounded-md "
             >
               <BsFillCameraFill

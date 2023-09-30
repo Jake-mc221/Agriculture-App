@@ -1,19 +1,39 @@
-import { useCallback } from "react";
+import Link from "next/link";
+import { Button } from "@/components/common/Button";
 import { TbCameraPlus } from "react-icons/tb";
 import { FiSend } from "react-icons/fi";
+import { useRouter } from "next/navigation";
+import { useCallback, useContext } from "react";
+import { PhotoContext } from "@/app/context";
 
 export function Submit() {
+  const { takePhoto } = useContext(PhotoContext)
+  const router = useRouter();
+
+  const capture = useCallback(async () => {
+    await takePhoto();
+    router.push("/capture/bound");
+  }, [router, takePhoto]);
 
   return (
     <div className="flex justify-center gap-12 text-sm font-medium text-gray-400 ">
-      <div className="">
+      <Button
+        component={Link}
+        intent="unstyled"
+        className="grid grid-cols-1 justify-items-center text-center"
+        href="/"
+      >
         <FiSend className="text-primary text-center w-10 h-10"/>
         Upload
-      </div>
-      <div className="grid grid-cols-1 justify-items-center text-center">
+      </Button>
+      <Button
+        intent="unstyled"
+        className="grid grid-cols-1 justify-items-center text-center"
+        onClick={capture}
+      >
         <TbCameraPlus className="text-primary w-10 h-10"/>
         Keep capturing
-      </div>
+      </Button>
     </div>
   )
 }

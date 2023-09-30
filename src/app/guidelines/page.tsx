@@ -69,7 +69,7 @@ export default function CaptureGuidelines() {
       <Button
         className="my-14"
         component={Link}
-        href="/capture"
+        href="/capture/bound"
       >
         Continue
       </Button>
