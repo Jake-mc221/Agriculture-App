@@ -1,9 +1,8 @@
 import { Fragment, useEffect, useState } from "react";
 import { Combobox, Transition } from "@headlessui/react";
 import { BsCheck, BsChevronDown } from "react-icons/bs";
-import { FieldPath, FormValues } from "./FormValues";
+import { FieldPath, FormValues } from "@/components/form/FormValues";
 import { Control, useController } from "react-hook-form";
-
 
 export function ComboBox<T>({
   label,
@@ -78,7 +77,8 @@ export function ComboBox<T>({
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <Combobox.Options className="absolute mt-1 z-10 max-h-60 w-full overflow-auto rounded-md bg-white text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+          {/* -translate-y-[calc(100%+50px)] here is what makes the combobox options appear above the label instead of below */}
+          <Combobox.Options className="absolute mt-1 z-10 max-h-60 w-full overflow-auto rounded-md bg-white text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm -translate-y-[calc(100%+50px)] ">
             {availableOptions.length === 0 ? (
               <div className="relative cursor-default select-none py-2 px-4 text-gray-700">
                 Nothing found.

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { RadioGroup } from "@headlessui/react";
 import { HealthButton } from "./HealthButton";
 import { useController, Control, Field } from "react-hook-form";
@@ -21,15 +21,14 @@ export default function Health( { name, control }: { name: FieldPath, control: C
       }}
     >
       <div className="flex justify-center gap-3">
-
-      {healthStatus.map((rating) => (
-        <RadioGroup.Option key={rating} value={rating}>
-          {({checked}) => (
-            <HealthButton healthStatus={rating} checked={checked}/>
+        {healthStatus.map((rating) => (
+          <RadioGroup.Option key={rating} value={rating}>
+            {({ checked }) => (
+              <HealthButton healthStatus={rating} checked={checked} />
             )}
-        </RadioGroup.Option>
-      ))}
-    </div>
+          </RadioGroup.Option>
+        ))}
+      </div>
     </RadioGroup>
   );
 }

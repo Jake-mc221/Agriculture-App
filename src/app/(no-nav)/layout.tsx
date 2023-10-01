@@ -6,7 +6,7 @@ export default function NavlessLayout({
   children: React.ReactNode;
 }) {
   return (
-      <main className="h-full">
+      <main className="h-screen">
           {children}
           <CapacitorPwaLoader />
       </main>

@@ -25,12 +25,11 @@ export default function Page() {
             alt="Captured image"
             />
           }
-          />
+          isFrozen={true}
+        />
       </div>
       
-      <div className="bg-slate-100 p-2">
-        <TabForm/>
-      </div>
+      <TabForm/>
       
     </>
   );

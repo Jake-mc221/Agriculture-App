@@ -1,16 +1,18 @@
-import React, { ElementType, ReactNode } from "react";
+import React, { useState, ElementType, ReactNode } from "react";
 import { Tab } from "@headlessui/react";
 import { twJoin } from "tailwind-merge";
 import { ComboBox } from "@/components/common/ComboBox";
 import Health from "./Health";
 import Submit from "./Submit";
 import { BsCheck2Square } from "react-icons/bs";
+import { MdQuestionMark } from "react-icons/md";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { FieldPath, FormValues } from "./FormValues";
 
 type TabOption = {
   name: string;
   display: string | ReactNode;
+  explanation?: string;
   componentType: React.ElementType
   componentProps?: any
 };
@@ -19,6 +21,7 @@ const tabOptions: TabOption[] = [
   {
     name: "crop_type",
     display: "Crop Type",
+    explanation: "Please select how you would classify this plant",
     componentType: ComboBox,
     componentProps:
       {
@@ -30,6 +33,7 @@ const tabOptions: TabOption[] = [
   {
     name: "soil_type",
     display: "Soil Type",
+    explanation: "Please describe the soil directly surrounding this plant",
     componentType: ComboBox,
     componentProps:
       {
@@ -41,11 +45,12 @@ const tabOptions: TabOption[] = [
   {
     name: "plant_health",
     display: "Plant Health",
+    explanation: "From left to right: sick, healthy, or thriving",
     componentType: Health,
   },
 
   {
-    display: <BsCheck2Square className=" w-7 h-7" />,
+    display: <BsCheck2Square className="w-7 h-7" />,
     name: "submit",
     componentType: Submit
   },
@@ -55,13 +60,13 @@ const tabOptions: TabOption[] = [
 
 export default function TabForm() {
   const { control, handleSubmit } = useForm<FormValues>(); 
-  
   const onSubmit: SubmitHandler<FormValues> = (data: FormValues) => alert(JSON.stringify(data));
+  const [isHelping, setIsHelping] = useState<boolean>(false);
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-md sm:px-0 z-50 h-1/2">
+    <form onSubmit={handleSubmit(onSubmit)} className="w-screen p-2 bg-slate-100 sm:px-0 z-50 h-[25vh]">
       <Tab.Group>
-        <Tab.List className="flex space-x-1 rounded-2xl bg-white p-1">
+        <Tab.List className="h-[7vh] flex space-x-1 rounded-2xl  bg-white p-1">
           {tabOptions.map((option) => {
             return (
               <Tab
@@ -71,7 +76,7 @@ export default function TabForm() {
                     typeof option.display === "string"
                       ? "w-full rounded-2xl"
                       : "bg-green-200 text-primary px-2",
-                    "py-2.5 text-sm font-medium leading-5 rounded-2xl",
+                    "py-2 text-sm font-medium leading-5 rounded-2xl",
                     selected
                       ? "text-primary bg-green-100 shadow"
                       : "text-gray-400 hover:bg-white/[0.12] hover:text-white",
@@ -87,16 +92,31 @@ export default function TabForm() {
           {tabOptions.map((option, idx) => (
             <Tab.Panel
               key={idx}
-              className="rounded-xl shadow-xl h-[12vh] bg-white  ring-opacity-60 ring-offset-2 ring-offset-primary focus:outline-none focus:ring-2"
+              className="grid grid-col-1 rounded-xl p-3 shadow-xl h-[15vh] bg-white  ring-opacity-60 ring-offset-2 ring-offset-primary focus:outline-none focus:ring-2"
             >
-              <div className="rounded-xl p-3 ring-opacity-60 ring-offset-2 focus:outline-none focus:ring-2">
-                {
-                  option.componentType === Submit ? 
-                  (<option.componentType {...option.componentProps}/>) :
-                  (<option.componentType name={option.name} control={control} {...option.componentProps}/>)
-                }
-                
-              </div>
+              {
+                option.componentType === Submit ? 
+                (<option.componentType {...option.componentProps}/>) :
+                (              
+                  <>
+                    <div className="flex justify-between z-50">
+                      <div
+                        className={
+                          "text-xs text-slate-500 mt-3 " +
+                          (isHelping ? "opacity-100" : "opacity-0")
+                        }
+                      >
+                        {option.explanation}
+                      </div>
+                      <MdQuestionMark
+                        className="bg-green-600 text-white "
+                        onPointerEnter={() => setIsHelping(true)}
+                        onPointerLeave={() => setIsHelping(false)}
+                      />
+                    </div>
+                    <option.componentType name={option.name} control={control} {...option.componentProps}/>
+                  </>)
+              }
             </Tab.Panel>
           ))}
         </Tab.Panels>

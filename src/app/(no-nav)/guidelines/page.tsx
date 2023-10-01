@@ -10,14 +10,9 @@ import { useRouter } from "next/navigation";
 
 /* eslint-disable @next/next/no-img-element */
 export default function CaptureGuidelines() {
-  const { takePhoto } = useContext(PhotoContext);
-  const r = useRouter();
-  const capture = useCallback(async () => {
-    await takePhoto();
-    r.push("/capture");
-  }, [r, takePhoto]);
+  const router = useRouter();
   return (
-    <div className="flex flex-col items-center w-full h-full">
+    <div className="flex flex-col items-center w-full h-screen">
       <h1 className="mb-4 pt-5">Capture Guidelines</h1>
 
       <div className="flex flex-col items-center w-full h-full m-2">
@@ -68,8 +63,7 @@ export default function CaptureGuidelines() {
 
       <Button
         className="my-14"
-        component={Link}
-        href="/capture/bound"
+        onClick={() => router.back()}
       >
         Continue
       </Button>

@@ -22,6 +22,7 @@ export default function Page() {
           alt="Captured image"
           />
         }
+        isFrozen={false}
         informDrag={setDragging}
         />
     </div>

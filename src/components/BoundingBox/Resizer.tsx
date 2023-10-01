@@ -9,16 +9,15 @@ export function Resizer({
   informDrag,
   ...divProps
 }: {
-  moveCallback: (dx: number, dy: number) => void,
-  informDrag: (val: boolean) => (void)
+  moveCallback: (dx: number, dy: number) => void;
+  informDrag?: (val: boolean) => void;
 } & ComponentPropsWithoutRef<"div">) {
-
   const [dragging, _setDragging] = useState(false);
   const resizerRef = useRef<HTMLDivElement>(null);
 
   const setDragging = useCallback((val: boolean) => {
     _setDragging(val);
-    informDrag(val);
+    informDrag?.(val);
   }, []);
 
   return (

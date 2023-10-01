@@ -2,7 +2,6 @@ import React from "react";
 import { Button } from "./Button";
 import Link from "next/link";
 import { BsArrowRepeat } from "react-icons/bs";
-import { RiGalleryLine } from "react-icons/ri";
 import { PhotoContext } from "@/app/context";
 import { useContext, useCallback } from "react";
 import { HiOutlineInformationCircle } from "react-icons/hi";
@@ -49,7 +48,7 @@ export function TopBar() {
           }}
           href="/capture"
         >
-          <BsArrowRepeat className="m-auto self-center text-2xl justify-center" />
+          <BsArrowRepeat className="m-auto self-center text-2xl justify-center mr-2" />
         </Button>
       </div>
     </div>

@@ -19,9 +19,11 @@ type BoxCoords = {
 export default function BoundingBox({
   image,
   informDrag,
+  isFrozen,
 }: {
   image: ReactNode;
   informDrag?: (val: boolean) => void;
+  isFrozen: boolean;
 }) {
   const boxRef = useRef<HTMLDivElement>(null);
 
@@ -78,7 +80,7 @@ export default function BoundingBox({
   const setDragging = useCallback(
     (val: boolean) => {
       _setDragging(val);
-      informDrag(val);
+      informDrag?.(val);
     },
     [informDrag],
   );
@@ -112,7 +114,7 @@ export default function BoundingBox({
           setDragging(true);
         }}
         onPointerMove={(e) => {
-          if (dragging) {
+          if (dragging && !isFrozen) {
             setBoxCoords((old) => {
               return {
                 ...old,
@@ -139,6 +141,9 @@ export default function BoundingBox({
         <Resizer
           className="rounded-full bg-white w-4 h-4 absolute left-[-4px] top-[-4px] cursor-nwse-resize"
           moveCallback={(dx, dy) => {
+            if (isFrozen) {
+              return;
+            }
             setBoxCoords((old) => {
               return {
                 positionX: old.positionX + dx / boundarySize.lengthX,
@@ -153,6 +158,9 @@ export default function BoundingBox({
         <Resizer
           className="rounded-full bg-white w-4 h-4 absolute left-[-4px] bottom-[-4px] cursor-nesw-resize"
           moveCallback={(dx, dy) => {
+            if (isFrozen) {
+              return;
+            }
             setBoxCoords((old) => {
               return {
                 positionX: old.positionX + dx / boundarySize.lengthX,
@@ -167,6 +175,9 @@ export default function BoundingBox({
         <Resizer
           className="rounded-full bg-white w-4 h-4 absolute right-[-4px] top-[-4px] cursor-nesw-resize"
           moveCallback={(dx, dy) => {
+            if (isFrozen) {
+              return;
+            }
             setBoxCoords((old) => {
               return {
                 positionX: old.positionX,
@@ -181,6 +192,9 @@ export default function BoundingBox({
         <Resizer
           className="rounded-full bg-white w-4 h-4 absolute right-[-4px] bottom-[-4px] cursor-nwse-resize"
           moveCallback={(dx, dy) => {
+            if (isFrozen) {
+              return;
+            }
             setBoxCoords((old) => {
               return {
                 positionX: old.positionX,
