@@ -1,6 +1,5 @@
 "use client";
 
-import { TbPhoto } from "react-icons/tb";
 import BoundingBox from "@/components/BoundingBox/BoundingBox";
 import { ComboBox } from "@/components/common/ComboBox";
 import { Tabs, TabOption } from "@/components/common/Tabs";
@@ -16,9 +15,34 @@ const tabOptions: TabOption[] = [
   {
     display: "Crop Type",
     name: "crop_type",
+    explanation: "Please select how you would classify this plant",
     content: (
       <ComboBox
-        options={[{ name: "Crop 1" }, { name: "Crop 2" }, { name: "Crop 3" }]}
+        options={[
+          { name: "Lettuce" },
+          { name: "Spinach" },
+          { name: "Kale" },
+          { name: "Arugula (Rocket)" },
+          { name: "Radishes" },
+          { name: "Carrots" },
+          { name: "Turnips" },
+          { name: "Swiss Chard" },
+          { name: "Bok Choy (Pak Choi)" },
+          { name: "Mustard Greens" },
+          { name: "Collard Greens" },
+          { name: "Strawberries" },
+          { name: "Onions" },
+          { name: "Garlic" },
+          { name: "Parsley" },
+          { name: "Cilantro (Coriander)" },
+          { name: "Basil" },
+          { name: "Mint" },
+          { name: "Broccoli" },
+          { name: "Cauliflower" },
+          { name: "Potatoes" },
+          { name: "Chinese Broccoli" },
+          { name: "Celery" },
+        ]}
         getOptionName={(option) => option.name}
       />
     ),
@@ -27,9 +51,17 @@ const tabOptions: TabOption[] = [
   {
     display: "Soil Type",
     name: "soil_type",
+    explanation: "Please describe the soil directly surrounding this plant",
     content: (
       <ComboBox
-        options={[{ name: "Soil 1" }, { name: "Soil 2" }, { name: "Soil 3" }]}
+        options={[
+          { name: "Sandy" },
+          { name: "Loamy" },
+          { name: "Clayey" },
+          { name: "Peaty" },
+          { name: "Chalky" },
+          { name: "Silt" },
+        ]}
         getOptionName={(option) => option.name}
       />
     ),
@@ -38,6 +70,7 @@ const tabOptions: TabOption[] = [
   {
     display: "Plant Health",
     name: "plant_health",
+    explanation: "From left to right: sick, healthy, or thriving",
     content: <Health />,
   },
 
@@ -45,6 +78,7 @@ const tabOptions: TabOption[] = [
     display: <BsCheck2Square className=" w-7 h-7" />,
     name: "submit",
     content: <Submit />,
+    explanation: "",
   },
 ];
 
@@ -68,13 +102,14 @@ export default function Home() {
               alt="Captured image"
             />
           }
+          isFrozen={bounded}
           informDrag={setDragging}
         />
       </div>
 
       <div className="self-end w-full">
         {bounded ? (
-          <form className="rounded-2xl py-2 px-2 bg-slate-100 w-full flex flex-col items-center gap-5">
+          <form className="relative rounded-2xl py-2 px-2 bg-slate-100 w-full flex flex-col items-center gap-5">
             <Tabs options={tabOptions} />
           </form>
         ) : (

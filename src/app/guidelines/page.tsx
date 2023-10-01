@@ -66,11 +66,7 @@ export default function CaptureGuidelines() {
         </div>
       </div>
 
-      <Button
-        className="my-14"
-        component={Link}
-        href="/capture"
-      >
+      <Button className="my-14" component={Link} href="/capture">
         Continue
       </Button>
     </div>
