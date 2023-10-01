@@ -8,48 +8,10 @@ import { useContext } from "react";
 import { PhotoContext } from "@/app/context";
 import { BsCheck2Square } from "react-icons/bs";
 import Submit from "@/components/form/Submit";
-import { useForm, Controller } from "react-hook-form";
-
-const tabOptions: TabOption[] = [
-  {
-    display: "Crop Type",
-    name: "crop_type",
-    content: (
-      <ComboBox
-        options={[{ name: "Crop 1" }, { name: "Crop 2" }, { name: "Crop 3" }]}
-        getOptionName={(option) => option.name}
-      />
-    ),
-  },
-
-  {
-    display: "Soil Type",
-    name: "soil_type",
-    content: (
-      <ComboBox
-        options={[{ name: "Soil 1" }, { name: "Soil 2" }, { name: "Soil 3" }]}
-        getOptionName={(option) => option.name}
-      />
-    ),
-  },
-
-  {
-    display: "Plant Health",
-    name: "plant_health",
-    content: <Health />,
-  },
-
-  {
-    display: <BsCheck2Square className=" w-7 h-7" />,
-    name: "submit",
-    content: <Submit />,
-  },
-];
-
+import TabForm from "@/components/form/TabForm";
 
 export default function Page() {
   const { images } = useContext(PhotoContext);
-  const {control} = useForm();
 
   return (
     <>
@@ -65,19 +27,11 @@ export default function Page() {
           }
           />
       </div>
-
-      <form className="rounded-2xl py-2 px-2 bg-slate-100 w-full flex flex-col items-center gap-5">
-        <Controller
-          name="plant_health"
-          control={control}
-          render={({field: { onChange }}) => (
-            <Health onChange={onChange}/>
-          )}
-        
-        />
-        <Health/>
-      </form>
-    
+      
+      <div className="bg-slate-100 p-2">
+        <TabForm/>
+      </div>
+      
     </>
   );
 }

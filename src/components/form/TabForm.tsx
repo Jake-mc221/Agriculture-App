@@ -11,7 +11,7 @@ import { FieldPath, FormValues } from "./FormValues";
 type TabOption = {
   name: string;
   display: string | ReactNode;
-  componentType: string;
+  componentType: React.ElementType
   componentProps?: any
 };
 
@@ -19,35 +19,35 @@ const tabOptions: TabOption[] = [
   {
     name: "crop_type",
     display: "Crop Type",
-    componentType: "ComboBox",
+    componentType: ComboBox,
     componentProps:
       {
-        options: [{ name: "Wheat" }, { name: "Rice" }, { name: "Potato" }],
-        getOptionName: (option: { name: string }) => option.name
+        options: ["Wheat", "Rice", "Potato"],
+        getOptionName: (option: string) => option
       }   
   },
 
   {
     name: "soil_type",
     display: "Soil Type",
-    componentType: "ComboBox",
+    componentType: ComboBox,
     componentProps:
       {
-        options: [{ name: "Clay" }, { name: "Sand" }, { name: "Silt" }],
-        getOptionName: (option: { name: string }) => option.name
+        options: ["Clay", "Sand", "Silt"],
+        getOptionName: (option: string) => option
       }   
   },
 
   {
     name: "plant_health",
     display: "Plant Health",
-    componentType: "Health",
+    componentType: Health,
   },
 
   {
     display: <BsCheck2Square className=" w-7 h-7" />,
     name: "submit",
-    componentType: "Submit"
+    componentType: Submit
   },
 ];
 
@@ -56,14 +56,13 @@ const tabOptions: TabOption[] = [
 export default function TabForm() {
   const { control, handleSubmit } = useForm<FormValues>(); 
   
-  const onSubmit: SubmitHandler<FormValues> = (data: FormValues) => console.log(data);
+  const onSubmit: SubmitHandler<FormValues> = (data: FormValues) => alert(JSON.stringify(data));
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-md sm:px-0 z-50 h-1/2">
       <Tab.Group>
         <Tab.List className="flex space-x-1 rounded-2xl bg-white p-1">
           {tabOptions.map((option) => {
-            console.log(option);
             return (
               <Tab
                 key={option.name}
@@ -92,9 +91,9 @@ export default function TabForm() {
             >
               <div className="rounded-xl p-3 ring-opacity-60 ring-offset-2 focus:outline-none focus:ring-2">
                 {
-                  option.componentType === "Submit" ? 
+                  option.componentType === Submit ? 
                   (<option.componentType {...option.componentProps}/>) :
-                  (<option.componentType control={control} {...option.componentProps}/>)
+                  (<option.componentType name={option.name} control={control} {...option.componentProps}/>)
                 }
                 
               </div>

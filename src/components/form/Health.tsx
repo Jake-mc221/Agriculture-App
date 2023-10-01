@@ -6,11 +6,11 @@ import { FieldPath, FormValues } from "./FormValues";
 
 const healthStatus = ["bad", "normal", "healthy"];
 
-export default function Health({name, control}: { name: FieldPath, control: Control<FormValues>}) {
+export default function Health( { name, control }: { name: FieldPath, control: Control<FormValues>}) {
   const [health, setHealth] = useState('');
   const { field: { onChange } } = useController({
-    name,
-    control,
+    name: name,
+    control: control,
     rules: { required: true }
   });
 

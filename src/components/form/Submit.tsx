@@ -18,10 +18,9 @@ export default function Submit() {
   return (
     <div className="flex justify-center gap-12 text-sm font-medium text-gray-400 ">
       <Button
-        component={Link}
+        type="submit"
         intent="unstyled"
         className="grid grid-cols-1 justify-items-center text-center"
-        href="/"
       >
         <FiSend className="text-primary text-center w-10 h-10"/>
         Upload
