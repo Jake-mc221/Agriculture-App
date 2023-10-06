@@ -26,6 +26,7 @@ export default function Submit() {
         Upload
       </Button>
       <Button
+        type="button"
         intent="unstyled"
         className="grid grid-cols-1 justify-items-center text-center"
         onClick={capture}
