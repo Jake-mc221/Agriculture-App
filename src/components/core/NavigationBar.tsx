@@ -10,17 +10,13 @@ import { Button } from "../common/Button";
 import { useContext, useCallback } from "react";
 import { PhotoContext } from "@/app/context";
 import { useRouter } from "next/navigation";
+import {capture} from '@/logic/localStorage';
 import { usePathname } from "next/navigation";
 
 export default function NavigationBar() {
-  const { takePhoto } = useContext(PhotoContext);
   const path = usePathname();
   const router = useRouter();
 
-  const capture = useCallback(async () => {
-    await takePhoto();
-    router.push("/capture/bound");
-  }, [router, takePhoto]);
 
   return (
     <>
@@ -55,7 +51,10 @@ export default function NavigationBar() {
             </Button>
             <Button
               intent="unstyled"
-              onClick={capture}
+              onClick={async () => {
+                await capture();
+                router.push("/capture/bound");
+              }}
               className="m-auto w-full h-full flex rounded-md "
             >
               <BsFillCameraFill

@@ -1,14 +1,28 @@
 "use client"
 import { PhotoContext } from "@/app/context";
-import { useState, useContext } from "react";
+import { useState, useMemo, useContext, useEffect } from "react";
 import BoundingBox from "@/components/BoundingBox/BoundingBox";
 import { MdDone } from "react-icons/md";
 import { Button } from "@/components/common/Button";
 import Link from "next/link";
+import { Metadata, getCurrentImage } from "@/logic/localStorage";
 
 export default function Page() {
-  const { images } = useContext(PhotoContext);
   const [dragging, setDragging] = useState(false);
+  const [image, setImage] = useState<Metadata>({});
+
+  useEffect(() =>
+    {
+      const getImg = async () =>
+        {
+          const img = await getCurrentImage();
+          setImage(img);
+          console.log(img);
+        };
+      getImg();
+    }, 
+    []
+  );
 
   return (
     <>
@@ -17,7 +31,7 @@ export default function Page() {
         image={
           // eslint-disable-next-line @next/next/no-img-element
           <img
-          src={images[images.length - 1].webviewPath}
+          src={image.path}
           className="object-cover"
           alt="Captured image"
           />
