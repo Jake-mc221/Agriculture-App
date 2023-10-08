@@ -2,82 +2,81 @@ import { Preferences } from "@capacitor/preferences";
 import { Camera, CameraResultType, Photo } from "@capacitor/camera";
 import { cursorTo } from "readline";
 import { Capacitor } from "@capacitor/core";
+import { useEffect, useState } from "react";
+import { Metadata, Label, BoxCoords } from "./metadataTypes";
+import { Geolocation, Position } from '@capacitor/geolocation';
 
-export type Label = {
-  soilType: string;
-  cropType: string;
-  health: string;
-}
 
-export type BoxCoords = {
-  x: number;
-  y: number;
-}
+export function useStorage() {
+  const [currImage, setCurrImage] = useState<Metadata>({});
 
-type Data = {
-  path: string;
-  timestamp: string;
-  location: string;
-  boundingCoords: BoxCoords;
-  label: Label;
-}
+  useEffect(
+    () => {
+      const getCurrentImage = async () => {
+        const curr = await Preferences.get({ key: "current" });
+        let meta_string = await Preferences.get({ key: curr.value! });
+        setCurrImage(JSON.parse(meta_string.value!));
+      }
+      getCurrentImage();
+    },
+    []
+  );
 
-export type Metadata = Partial<Data>;
+  const capture = async () => {
+    const photo = await Camera.getPhoto({
+      quality: 100,
+      allowEditing: false,
+      resultType: CameraResultType.Uri
+    });
 
-export async function capture() {
-  const photo = await Camera.getPhoto({
-    quality: 100,
-    allowEditing: false,
-    resultType: CameraResultType.Uri
-  });
-  const date = new Date();
-
-  let imagePath = photo.path;
-
-  if (!Capacitor.isNativePlatform()) {
-    imagePath = photo.webPath;
+    const {coords: {latitude, longitude}} = await Geolocation.getCurrentPosition();
+    const date = new Date();
+    
+    const metadata = {
+      path: photo.webPath,
+      timestamp: date.toISOString(),
+      location: {latitude, longitude}
+    }
+    
+    Preferences.set({
+      key: metadata.timestamp,
+      value: JSON.stringify(metadata)
+    })
+  
+    Preferences.set({
+      key: "current",
+      value: metadata.timestamp
+    })
   }
 
-  const metadata = {
-    path: imagePath,
-    timestamp: date.toISOString(),
-    location: ""
+  const addBound = async (bound: BoxCoords) => {
+    currImage.boundingCoords = bound;
+  
+    Preferences.set({
+      key: currImage.timestamp!,
+      value: JSON.stringify(currImage)
+    })
+  };
+  
+  const addLabel = async (label: Label) => {
+    currImage.label = label;
+  
+    Preferences.set({
+      key: currImage.timestamp!,
+      value: JSON.stringify(currImage)
+    })
   }
 
-  Preferences.set({
-    key: metadata.timestamp,
-    value: JSON.stringify(metadata)
-  })
+  const retake = async () =>  {
+    Preferences.remove({ key: "current" });
+    await capture();
 
-  Preferences.set({
-    key: "current",
-    value: metadata.timestamp
-  })
+  }
+  return {capture, retake, addBound, addLabel, currImage};
 }
 
-export async function getCurrentImage(): Promise<Metadata>  {
-  const curr = await Preferences.get({ key: "current" });
-  let meta_string = await Preferences.get({ key: curr.value! });
-  return JSON.parse(meta_string.value!);
-}
 
-export async function addBound(bound: BoxCoords) {
-  let metadata = await getCurrentImage();
-  metadata.boundingCoords = bound;
 
-  Preferences.set({
-    key: metadata.timestamp!,
-    value: JSON.stringify(metadata)
-  })
-}
 
-export async function addLabel(label: Label) {
-  let metadata = await getCurrentImage();
-  metadata.label = label;
 
-  Preferences.set({
-    key: metadata.timestamp!,
-    value: JSON.stringify(metadata)
-  })
-}
 

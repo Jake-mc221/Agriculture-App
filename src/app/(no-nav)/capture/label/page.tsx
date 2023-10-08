@@ -1,17 +1,11 @@
 "use client"
 
 import BoundingBox from "@/components/BoundingBox/BoundingBox";
-import { Tabs, TabOption } from "@/components/common/Tabs";
-import { ComboBox } from "@/components/common/ComboBox";
-import Health from "../../../../components/form/Health";
-import { useContext } from "react";
-import { PhotoContext } from "@/app/context";
-import { BsCheck2Square } from "react-icons/bs";
-import Submit from "@/components/form/Submit";
+import { useStorage } from "@/logic/localStorage";
 import TabForm from "@/components/form/TabForm";
 
 export default function Page() {
-  const { images } = useContext(PhotoContext);
+  const { currImage } = useStorage();
 
   return (
     <>
@@ -20,7 +14,7 @@ export default function Page() {
           image={
             // eslint-disable-next-line @next/next/no-img-element
             <img
-            src={images[images.length - 1].webviewPath}
+            src={currImage.path}
             className="object-cover"
             alt="Captured image"
             />

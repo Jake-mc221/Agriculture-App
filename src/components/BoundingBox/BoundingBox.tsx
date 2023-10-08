@@ -8,21 +8,17 @@ import React, {
   useState,
 } from "react";
 import { Resizer } from "./Resizer";
-
-type BoxCoords = {
-  positionX: number;
-  positionY: number;
-  lengthX: number;
-  lengthY: number;
-};
+import { BoxCoords } from "@/logic/metadataTypes";
 
 export default function BoundingBox({
   image,
   informDrag,
+  informBound,
   isFrozen,
 }: {
   image: ReactNode;
   informDrag?: (val: boolean) => void;
+  informBound?: (coords: BoxCoords) => void;
   isFrozen: boolean;
 }) {
   const boxRef = useRef<HTMLDivElement>(null);
@@ -61,6 +57,8 @@ export default function BoundingBox({
       return newCoords;
     });
   }, []);
+
+  useEffect(() => informBound?.(boxCoords), [boxCoords]);
 
   const boundaryResize = useCallback(
     (entries: ResizeObserverEntry[]) => {

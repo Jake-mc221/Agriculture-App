@@ -1,8 +1,5 @@
-export type FieldPath = keyof FormValues;
+import { Label } from "@/logic/metadataTypes";
 
-export type FormValues = {
-  cropType: string;
-  soilType: string;
-  plantHealth: string;
-}
+export type FieldPath = keyof FormValues;
+export type FormValues = Label;
 

@@ -8,6 +8,7 @@ import { BsCheck2Square } from "react-icons/bs";
 import { MdQuestionMark } from "react-icons/md";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { FieldPath, FormValues } from "./FormValues";
+import { useStorage } from "@/logic/localStorage";
 
 type TabOption = {
   name: string;
@@ -50,9 +51,9 @@ const tabOptions: TabOption[] = [
   },
 
   {
-    display: <BsCheck2Square className="w-7 h-7" />,
     name: "submit",
-    componentType: Submit
+    display: <BsCheck2Square className="w-7 h-7" />,
+    componentType: Submit,
   },
 ];
 
@@ -60,11 +61,11 @@ const tabOptions: TabOption[] = [
 
 export default function TabForm() {
   const { control, handleSubmit } = useForm<FormValues>(); 
-  const onSubmit: SubmitHandler<FormValues> = (data: FormValues) => alert(JSON.stringify(data));
   const [isHelping, setIsHelping] = useState<boolean>(false);
 
+
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="w-screen p-2 bg-slate-100 sm:px-0 z-50 h-[25vh]">
+    <form className="w-screen p-2 bg-slate-100 sm:px-0 z-50 h-[25vh]">
       <Tab.Group>
         <Tab.List className="h-[7vh] flex space-x-1 rounded-2xl  bg-white p-1">
           {tabOptions.map((option) => {
@@ -96,7 +97,7 @@ export default function TabForm() {
             >
               {
                 option.componentType === Submit ? 
-                (<option.componentType {...option.componentProps}/>) :
+                (<option.componentType handler={handleSubmit}/>) :
                 (              
                   <>
                     <div className="flex justify-between z-50">

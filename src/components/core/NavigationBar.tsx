@@ -10,13 +10,13 @@ import { Button } from "../common/Button";
 import { useContext, useCallback } from "react";
 import { PhotoContext } from "@/app/context";
 import { useRouter } from "next/navigation";
-import {capture} from '@/logic/localStorage';
+import {useStorage} from '@/logic/localStorage';
 import { usePathname } from "next/navigation";
 
 export default function NavigationBar() {
   const path = usePathname();
-  const router = useRouter();
-
+  const router = useRouter(); 
+  const { capture } = useStorage();
 
   return (
     <>
