@@ -1,5 +1,4 @@
-import { Label } from "@/logic/metadataTypes";
+import { Label } from "@/types/metadataTypes";
 
 export type FieldPath = keyof FormValues;
 export type FormValues = Label;
-

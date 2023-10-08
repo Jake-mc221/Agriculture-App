@@ -1,4 +1,4 @@
-import React, { useState, ElementType, ReactNode } from "react";
+import React, { useState, ReactNode } from "react";
 import { Tab } from "@headlessui/react";
 import { twJoin } from "tailwind-merge";
 import { ComboBox } from "@/components/common/ComboBox";
@@ -6,16 +6,14 @@ import Health from "./Health";
 import Submit from "./Submit";
 import { BsCheck2Square } from "react-icons/bs";
 import { MdQuestionMark } from "react-icons/md";
-import { useForm, SubmitHandler } from "react-hook-form";
-import { FieldPath, FormValues } from "./FormValues";
-import { useStorage } from "@/logic/localStorage";
-
+import { useForm } from "react-hook-form";
+import { FormValues } from "./FormValues";
 type TabOption = {
   name: string;
   display: string | ReactNode;
   explanation?: string;
-  componentType: React.ElementType
-  componentProps?: any
+  componentType: React.ElementType;
+  componentProps?: object;
 };
 
 const tabOptions: TabOption[] = [
@@ -24,11 +22,10 @@ const tabOptions: TabOption[] = [
     display: "Crop Type",
     explanation: "Please select how you would classify this plant",
     componentType: ComboBox,
-    componentProps:
-      {
-        options: ["Wheat", "Rice", "Potato"],
-        getOptionName: (option: string) => option
-      }   
+    componentProps: {
+      options: ["Wheat", "Rice", "Potato"],
+      getOptionName: (option: string) => option,
+    },
   },
 
   {
@@ -36,11 +33,10 @@ const tabOptions: TabOption[] = [
     display: "Soil Type",
     explanation: "Please describe the soil directly surrounding this plant",
     componentType: ComboBox,
-    componentProps:
-      {
-        options: ["Clay", "Sand", "Silt"],
-        getOptionName: (option: string) => option
-      }   
+    componentProps: {
+      options: ["Clay", "Sand", "Silt"],
+      getOptionName: (option: string) => option,
+    },
   },
 
   {
@@ -57,12 +53,9 @@ const tabOptions: TabOption[] = [
   },
 ];
 
-
-
 export default function TabForm() {
-  const { control, handleSubmit } = useForm<FormValues>(); 
+  const { control, handleSubmit } = useForm<FormValues>();
   const [isHelping, setIsHelping] = useState<boolean>(false);
-
 
   return (
     <form className="w-screen p-2 bg-slate-100 sm:px-0 z-50 h-[25vh]">
@@ -95,29 +88,32 @@ export default function TabForm() {
               key={idx}
               className="grid grid-col-1 rounded-xl p-3 shadow-xl h-[15vh] bg-white  ring-opacity-60 ring-offset-2 ring-offset-primary focus:outline-none focus:ring-2"
             >
-              {
-                option.componentType === Submit ? 
-                (<option.componentType handler={handleSubmit}/>) :
-                (              
-                  <>
-                    <div className="flex justify-between z-50">
-                      <div
-                        className={
-                          "text-xs text-slate-500 mt-3 " +
-                          (isHelping ? "opacity-100" : "opacity-0")
-                        }
-                      >
-                        {option.explanation}
-                      </div>
-                      <MdQuestionMark
-                        className="bg-green-600 text-white "
-                        onPointerEnter={() => setIsHelping(true)}
-                        onPointerLeave={() => setIsHelping(false)}
-                      />
+              {option.componentType === Submit ? (
+                <option.componentType handler={handleSubmit} />
+              ) : (
+                <>
+                  <div className="flex justify-between z-50">
+                    <div
+                      className={
+                        "text-xs text-slate-500 mt-3 " +
+                        (isHelping ? "opacity-100" : "opacity-0")
+                      }
+                    >
+                      {option.explanation}
                     </div>
-                    <option.componentType name={option.name} control={control} {...option.componentProps}/>
-                  </>)
-              }
+                    <MdQuestionMark
+                      className="bg-green-600 text-white "
+                      onPointerEnter={() => setIsHelping(true)}
+                      onPointerLeave={() => setIsHelping(false)}
+                    />
+                  </div>
+                  <option.componentType
+                    name={option.name}
+                    control={control}
+                    {...option.componentProps}
+                  />
+                </>
+              )}
             </Tab.Panel>
           ))}
         </Tab.Panels>

@@ -8,7 +8,7 @@ import React, {
   useState,
 } from "react";
 import { Resizer } from "./Resizer";
-import { BoxCoords } from "@/logic/metadataTypes";
+import { BoxCoords } from "@/types/metadataTypes";
 
 export default function BoundingBox({
   image,

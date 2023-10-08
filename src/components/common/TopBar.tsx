@@ -2,8 +2,6 @@ import React from "react";
 import { Button } from "./Button";
 import Link from "next/link";
 import { BsArrowRepeat } from "react-icons/bs";
-import { PhotoContext } from "@/app/context";
-import { useContext, useCallback } from "react";
 import { HiOutlineInformationCircle } from "react-icons/hi";
 import { useRouter } from "next/navigation";
 import { useStorage } from "@/logic/localStorage";
