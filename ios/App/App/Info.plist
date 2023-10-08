@@ -54,6 +54,11 @@
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>To store images</string>
 	
+	<!-- Permissions for the geolocation-->
 
+	<key>NSLocationAlwaysUsageDescription </key>
+	<string>(Privacy - Location Always Usage Description)</string>
+	<key>NSLocationWhenInUseUsageDescription </key> 
+	<string>(Privacy - Location When In Use Usage Description)</string>
 </dict>
 </plist>

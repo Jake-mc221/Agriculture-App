@@ -21,6 +21,7 @@ export const usePhotoGallery = () => {
   useEffect(() => {
     if (images.length > 0) {
       Preferences.set({ key: PHOTOS_PREF_KEY, value: JSON.stringify(images) });
+      console.log(Preferences.get(PHOTOS_PREF_KEY));
     }
   }, [images]);
 
