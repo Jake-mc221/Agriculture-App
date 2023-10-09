@@ -1,7 +1,7 @@
 import { Preferences } from "@capacitor/preferences";
 import { Camera, CameraResultType } from "@capacitor/camera";
 import { useEffect, useState } from "react";
-import { Metadata, Label, BoxCoords } from "../types/metadataTypes";
+import { Metadata, Label, BoxCoords, SubmitData } from "../types/metadataTypes";
 import { Geolocation } from "@capacitor/geolocation";
 
 export function useStorage() {
@@ -45,6 +45,19 @@ export function useStorage() {
     });
   };
 
+  // const getAll() = async () => {
+  //   const Prefs = await Preferences.keys();
+  //   for (let key of Prefs.keys()) {
+      
+  //   }
+  // };
+
+  // const function package(): SubmitData[] {
+  //   //
+  //   const blob = readFile(currImage.webpath)
+  //   return {image: blob, metadata: currImage.metdata}
+  // }
+
   const addBound = async (bound: BoxCoords) => {
     currImage.boundingCoords = bound;
 
@@ -54,6 +67,8 @@ export function useStorage() {
     });
   };
 
+  
+
   const addLabel = async (label: Label) => {
     currImage.label = label;
 
@@ -62,6 +77,8 @@ export function useStorage() {
       value: JSON.stringify(currImage),
     });
   };
+
+  
 
   const retake = async () => {
     Preferences.remove({ key: "current" });

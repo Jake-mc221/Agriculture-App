@@ -17,7 +17,6 @@ export type Location = {
 };
 
 type Data = {
-  path: string;
   timestamp: string;
   location: Location;
   boundingCoords: BoxCoords;
@@ -25,3 +24,13 @@ type Data = {
 };
 
 export type Metadata = Partial<Data>;
+
+export type TempData = {
+  path: string;
+  metadata: Metadata;
+}
+
+export type SubmitData = {
+  image: Blob;
+  metadata: Metadata;
+}
