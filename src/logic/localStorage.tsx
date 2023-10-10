@@ -45,12 +45,18 @@ export function useStorage() {
     });
   };
 
-  // const getAll() = async () => {
-  //   const Prefs = await Preferences.keys();
-  //   for (let key of Prefs.keys()) {
-      
-  //   }
-  // };
+  const getAll = async () => {
+    const Prefs = await Preferences.keys();
+    const arrayOfObjects = [];
+
+    for (const key of Prefs) {
+      const value = await Preferences.getItem(key);
+      const object = { key, value }; // Assuming you want to store key-value pairs as objects
+      arrayOfObjects.push(object);
+    }
+
+    return arrayOfObjects;
+  };
 
   // const function package(): SubmitData[] {
   //   //
@@ -67,8 +73,6 @@ export function useStorage() {
     });
   };
 
-  
-
   const addLabel = async (label: Label) => {
     currImage.label = label;
 
@@ -77,8 +81,6 @@ export function useStorage() {
       value: JSON.stringify(currImage),
     });
   };
-
-  
 
   const retake = async () => {
     Preferences.remove({ key: "current" });
